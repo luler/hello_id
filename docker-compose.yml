@@ -1,6 +1,6 @@
 version: "2"
 services:
   go_test:
-    image: go_test:latest
+    image: dreamplay/hello_snowflake
     ports:
       - 8080:8080
