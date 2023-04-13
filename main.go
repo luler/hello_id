@@ -7,6 +7,7 @@ import (
 )
 
 func main() {
+	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 	var workers [1024]*SnowFlake.Worker
 	for i := 0; i < 1024; i++ {
@@ -14,7 +15,7 @@ func main() {
 		workers[i] = w
 	}
 
-	r.GET("/createSnowflakeId", func(c *gin.Context) {
+	r.GET("/create", func(c *gin.Context) {
 		CommonController.CreateSnowflakeId(c, workers)
 	})
 	r.Run() // listen and serve on 0.0.0.0:8080
