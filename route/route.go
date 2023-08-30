@@ -15,4 +15,7 @@ func InitRouter(e *gin.Engine) {
 	e.Any("/snowflake", func(c *gin.Context) {
 		common_controller.CreateSnowflakeId(c, workers)
 	})
+
+	e.Any("/uuid1", common_controller.Uuid1)
+	e.Any("/uuid4", common_controller.Uuid4)
 }
