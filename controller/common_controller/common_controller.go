@@ -12,7 +12,7 @@ import (
 func CreateSnowflakeId(c *gin.Context, workers [1024]*snowflake.Worker) {
 	worker_id, _ := strconv.Atoi(c.Query("worker_id"))
 	if worker_id < 0 || worker_id > 1023 {
-		response_tool.Fail(c, "机器ID只能设置在0-1023之间", gin.H{})
+		response_tool.Fail(c, "机器ID只能设置在0-1023之间")
 		return
 	}
 	worker := workers[worker_id]
