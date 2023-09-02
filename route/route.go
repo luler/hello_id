@@ -10,4 +10,6 @@ func InitRouter(e *gin.Engine) {
 	e.Any("/sonyflake", common_controller.Sonyflake)
 	e.Any("/uuid1", common_controller.Uuid1)
 	e.Any("/uuid4", common_controller.Uuid4)
+	e.Any("/xid", common_controller.Xid)
+	e.Any("/ksuid", common_controller.Ksuid)
 }

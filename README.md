@@ -12,7 +12,7 @@ docker-compose up -d
 
 #### 使用
 
-##### 生成雪花id
+##### 生成雪花id（基于时间、机器id、随机数生成，有序，整数类型）
 
 接口: http://ip:8080/snowflake
 
@@ -38,7 +38,7 @@ docker-compose up -d
 }
 ```
 
-##### 生成sonyflake id
+##### 生成sonyflake id（snowflake的改进版本，可用时间更长，有序，整数类型）
 
 接口: http://ip:8080/sonyflake
 
@@ -108,6 +108,56 @@ docker-compose up -d
   "data": {
     "id": "ee13483c-48d6-11ee-ae17-00ff7507da7c",
     "type": "uuid1"
+  },
+  "message": "创建成功"
+}
+```
+
+##### 生成xid（基于时间戳、随机数生成，有序）
+
+接口: http://ip:8080/xid
+
+方法：GET、POST等
+
+请求参数：
+
+| 字段 | 是否必填 | 类型 | 描述 |
+|----|------|----|----|
+|    |      |    |    |
+
+返回示例：
+
+```json
+{
+  "code": 200,
+  "data": {
+    "id": "cjpc168ip8e48m05a3l0",
+    "type": "xid"
+  },
+  "message": "创建成功"
+}
+```
+
+##### 生成ksuid（基于时间戳、随机数生成，随机数比xid更大，唯一性更好，有序）
+
+接口: http://ip:8080/ksuid
+
+方法：GET、POST等
+
+请求参数：
+
+| 字段 | 是否必填 | 类型 | 描述 |
+|----|------|----|----|
+|    |      |    |    |
+
+返回示例：
+
+```json
+{
+  "code": 200,
+  "data": {
+    "id": "2UpIxKEKXsXzb52yVxeEgif9WDJ",
+    "type": "ksuid"
   },
   "message": "创建成功"
 }

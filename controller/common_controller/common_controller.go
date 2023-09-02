@@ -3,7 +3,9 @@ package common_controller
 import (
 	"github.com/bwmarrin/snowflake"
 	"github.com/gin-gonic/gin"
+	"github.com/rs/xid"
 	uuid "github.com/satori/go.uuid"
+	"github.com/segmentio/ksuid"
 	"github.com/sony/sonyflake"
 	"go_test/helper/response_tool"
 	"strconv"
@@ -51,5 +53,23 @@ func Uuid4(c *gin.Context) {
 	response_tool.Success(c, "创建成功", gin.H{
 		"type": "uuid4",
 		"id":   uuid4.String(),
+	})
+}
+
+// Xid 生成Xid类型的id
+func Xid(c *gin.Context) {
+	guid := xid.New()
+	response_tool.Success(c, "创建成功", gin.H{
+		"type": "xid",
+		"id":   guid.String(),
+	})
+}
+
+// Ksuid 生成Ksuid类型的id
+func Ksuid(c *gin.Context) {
+	guid := ksuid.New()
+	response_tool.Success(c, "创建成功", gin.H{
+		"type": "ksuid",
+		"id":   guid.String(),
 	})
 }
