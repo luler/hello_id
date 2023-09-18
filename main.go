@@ -8,9 +8,12 @@ import (
 	"os"
 )
 
-func main() {
+func init() {
 	//加载.env配置
 	godotenv.Load()
+}
+
+func main() {
 	gin.SetMode(os.Getenv(gin.EnvGinMode))
 	//不输出请求日志
 	gin.DefaultWriter = ioutil.Discard
