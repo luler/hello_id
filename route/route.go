@@ -2,14 +2,17 @@ package route
 
 import (
 	"github.com/gin-gonic/gin"
-	"go_test/controller/common_controller"
+	"go_test/controller/common"
+	"go_test/controller/login"
 )
 
 func InitRouter(e *gin.Engine) {
-	e.Any("/snowflake", common_controller.Snowflake)
-	e.Any("/sonyflake", common_controller.Sonyflake)
-	e.Any("/uuid1", common_controller.Uuid1)
-	e.Any("/uuid4", common_controller.Uuid4)
-	e.Any("/xid", common_controller.Xid)
-	e.Any("/ksuid", common_controller.Ksuid)
+	e.Any("/snowflake", common.Snowflake)
+	e.Any("/sonyflake", common.Sonyflake)
+	e.Any("/uuid1", common.Uuid1)
+	e.Any("/uuid4", common.Uuid4)
+	e.Any("/xid", common.Xid)
+	e.Any("/ksuid", common.Ksuid)
+	//登录相关
+	e.Any("/login", login.Login)
 }

@@ -1,4 +1,4 @@
-package response_tool
+package response_helper
 
 import (
 	"github.com/gin-gonic/gin"
