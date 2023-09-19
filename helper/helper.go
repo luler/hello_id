@@ -3,11 +3,13 @@ package helper
 import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
+	"github.com/goinggo/mapstructure"
 	"net/url"
 	"reflect"
 	"strings"
 )
 
+// 获取请求参数-返回map类型
 func Input(c *gin.Context, fields ...string) map[string]interface{} {
 	param := make(map[string]interface{})
 	extractParam := func(queryParams url.Values, t string) map[string]interface{} {
@@ -84,4 +86,11 @@ func Input(c *gin.Context, fields ...string) map[string]interface{} {
 	}
 
 	return filteredParam
+}
+
+// 获取参数并验证
+func InputStruct(c *gin.Context, param interface{}) interface{} {
+	data := Input(c)
+	mapstructure.Decode(data, param)
+	return Check(param)
 }

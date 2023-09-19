@@ -14,5 +14,5 @@ func InitRouter(e *gin.Engine) {
 	e.Any("/xid", common.Xid)
 	e.Any("/ksuid", common.Ksuid)
 	//登录相关
-	e.Any("/login", login.Login)
+	e.POST("/login", login.Login)
 }
