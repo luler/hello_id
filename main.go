@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
+	"go_test/helper"
 	"go_test/middleware"
 	"go_test/route"
 	"io/ioutil"
@@ -10,8 +10,8 @@ import (
 )
 
 func init() {
-	//加载.env配置
-	godotenv.Load()
+	//项目初始化
+	helper.InitApp()
 }
 
 func main() {
