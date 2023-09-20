@@ -26,3 +26,14 @@ func Fail(c *gin.Context, message string, data ...interface{}) {
 	}
 	c.JSON(res["code"].(int), res)
 }
+
+func Common(c *gin.Context, code int, message string, data ...interface{}) {
+	res := make(map[string]interface{})
+	res["code"] = code
+	res["message"] = message
+	res["data"] = []int{}
+	if len(data) > 0 {
+		res["data"] = data[0]
+	}
+	c.JSON(res["code"].(int), res)
+}

@@ -9,7 +9,7 @@ import (
 )
 
 // 校验参数
-func Check(data interface{}) interface{} {
+func Check(data interface{}) {
 	uni := ut.New(zh.New())
 	trans, _ := uni.GetTranslator("zh")
 	validate := validator.New()
@@ -19,12 +19,10 @@ func Check(data interface{}) interface{} {
 		return name
 	})
 	zh_translations.RegisterDefaultTranslations(validate, trans)
-
 	err := validate.Struct(data)
 	if err != nil {
 		for _, err := range err.(validator.ValidationErrors) {
-			return err.Translate(trans)
+			CommonException(err.Translate(trans))
 		}
 	}
-	return nil
 }

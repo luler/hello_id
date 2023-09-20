@@ -89,8 +89,8 @@ func Input(c *gin.Context, fields ...string) map[string]interface{} {
 }
 
 // 获取参数并验证
-func InputStruct(c *gin.Context, param interface{}) interface{} {
+func InputStruct(c *gin.Context, param interface{}) {
 	data := Input(c)
 	mapstructure.Decode(data, param)
-	return Check(param)
+	Check(param)
 }
