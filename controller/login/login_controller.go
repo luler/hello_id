@@ -5,6 +5,7 @@ import (
 	"go_test/helper"
 	"go_test/helper/response_helper"
 	"go_test/model"
+	"os"
 )
 
 func Login(c *gin.Context) {
@@ -15,9 +16,21 @@ func Login(c *gin.Context) {
 	var param Param
 	helper.InputStruct(c, &param)
 	var user model.User
-	helper.Db().Where("name=?", param.Name).First(&user)
-	if user.ID == 0 {
-		helper.CommonException("用户不存在")
+	err := helper.Db().Where("name=?", param.Name).First(&user)
+	if err.Error != nil {
+		if param.Name == os.Getenv("ADMIN_NAME") {
+			user.Name = param.Name
+			user.Password = os.Getenv("ADMIN_PASSWORD")
+			user.Status = 1
+			res := helper.Db().Save(&user)
+			if res.Error != nil {
+				helper.CommonException("系统异常")
+			}
+			helper.Db().Where("name=?", param.Name).First(&user)
+		} else {
+			helper.CommonException("用户不存在")
+		}
 	}
+
 	response_helper.Success(c, "登录成功", user)
 }
