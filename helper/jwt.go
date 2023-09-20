@@ -9,9 +9,15 @@ import (
 	"time"
 )
 
+// 获取jwt配置有效时间
+func GetJwtExpire() int {
+	jwt_expire, _ := strconv.Atoi(os.Getenv("JWT_EXPIRE"))
+	return jwt_expire
+}
+
 // 生成token
 func GenerateToken(data map[string]any) string {
-	jwt_expire, _ := strconv.Atoi(os.Getenv("JWT_EXPIRE"))
+	jwt_expire := GetJwtExpire()
 	jwt_secret := os.Getenv("JWT_SECRET")
 	exp := time.Now().Add(time.Second * time.Duration(jwt_expire)).Unix()
 	token := jwt.New(jwt.SigningMethodHS256)

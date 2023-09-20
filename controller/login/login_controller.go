@@ -32,5 +32,13 @@ func Login(c *gin.Context) {
 		}
 	}
 
-	response_helper.Success(c, "登录成功", user)
+	res := gin.H{
+		"type": "Bearer",
+		"token": helper.GenerateToken(gin.H{
+			"uid": user.ID,
+		}),
+		"jwt_expire": helper.GetJwtExpire(),
+	}
+
+	response_helper.Success(c, "登录成功", res)
 }
