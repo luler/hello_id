@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"go_test/helper"
+	"go_test/helper/jwt_helper"
 	"time"
 )
 
@@ -12,10 +13,10 @@ func init() {
 }
 
 func main() {
-	token := helper.GenerateToken(map[string]any{
+	token := jwt_helper.GenerateToken(map[string]any{
 		"uid": 1,
 	})
 
 	time.Sleep(time.Second * 10)
-	fmt.Println(helper.ParseToken(token))
+	fmt.Println(jwt_helper.ParseToken(token))
 }

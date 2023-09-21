@@ -2,6 +2,7 @@ package main
 
 import (
 	"go_test/helper"
+	"go_test/helper/db_helper"
 	"go_test/model"
 	"os"
 )
@@ -14,7 +15,7 @@ func init() {
 func main() {
 
 	// 自动创建表
-	helper.Db().AutoMigrate(&model.User{})
+	db_helper.Db().AutoMigrate(&model.User{})
 
 	os.Exit(0)
 }

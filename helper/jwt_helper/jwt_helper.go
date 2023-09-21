@@ -1,8 +1,9 @@
-package helper
+package jwt_helper
 
 import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
+	"go_test/helper"
 	"os"
 	"strconv"
 	"strings"
@@ -29,7 +30,7 @@ func GenerateToken(data map[string]any) string {
 	tokenString, err := token.SignedString([]byte(jwt_secret))
 	if err != nil {
 		fmt.Println(err)
-		CommonException("生成token失败")
+		helper.CommonException("生成token失败")
 	}
 
 	return tokenString
@@ -52,9 +53,9 @@ func ParseToken(tokenString string, ignore_exp ...bool) map[string]any {
 
 	if !ignore_exp_value && (err != nil || !token.Valid) {
 		if strings.Contains(err.Error(), "expired") {
-			CommonException("token已过期")
+			helper.CommonException("token已过期")
 		} else {
-			CommonException("token无效")
+			helper.CommonException("token无效")
 		}
 	}
 
@@ -62,4 +63,13 @@ func ParseToken(tokenString string, ignore_exp ...bool) map[string]any {
 	claims, _ := token.Claims.(jwt.MapClaims)
 
 	return claims
+}
+
+// 签发token
+func IssueToken(data map[string]any) map[string]any {
+	return map[string]any{
+		"type":       "Bearer",
+		"token":      GenerateToken(data),
+		"jwt_expire": GetJwtExpire(),
+	}
 }

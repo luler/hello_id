@@ -3,6 +3,8 @@ package login
 import (
 	"github.com/gin-gonic/gin"
 	"go_test/helper"
+	"go_test/helper/db_helper"
+	"go_test/helper/jwt_helper"
 	"go_test/helper/response_helper"
 	"go_test/model"
 	"golang.org/x/crypto/bcrypt"
@@ -17,18 +19,18 @@ func Login(c *gin.Context) {
 	var param Param
 	helper.InputStruct(c, &param)
 	var user model.User
-	err := helper.Db().Where("name=?", param.Name).First(&user)
+	err := db_helper.Db().Where("name=?", param.Name).First(&user)
 	if err.Error != nil {
 		if param.Name == os.Getenv("ADMIN_NAME") {
 			hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(os.Getenv("ADMIN_PASSWORD")), bcrypt.DefaultCost)
 			user.Name = param.Name
 			user.Password = string(hashedPassword)
 			user.Status = 1
-			res := helper.Db().Save(&user)
+			res := db_helper.Db().Save(&user)
 			if res.Error != nil {
 				helper.CommonException("系统异常")
 			}
-			helper.Db().Where("name=?", param.Name).First(&user)
+			db_helper.Db().Where("name=?", param.Name).First(&user)
 		} else {
 			helper.CommonException("用户不存在")
 		}
@@ -44,13 +46,9 @@ func Login(c *gin.Context) {
 		helper.CommonException("用户已被禁用")
 	}
 
-	res := gin.H{
-		"type": "Bearer",
-		"token": helper.GenerateToken(gin.H{
-			"uid": user.ID,
-		}),
-		"jwt_expire": helper.GetJwtExpire(),
-	}
+	res := jwt_helper.IssueToken(gin.H{
+		"uid": user.ID,
+	})
 
 	response_helper.Success(c, "登录成功", res)
 }
