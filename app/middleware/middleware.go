@@ -3,8 +3,10 @@ package middleware
 import (
 	"github.com/gin-gonic/gin"
 	"go_test/app/helper"
+	"go_test/app/helper/jwt_helper"
 	"go_test/app/helper/response_helper"
 	"net/http"
+	"strings"
 )
 
 // 初始化全局中间件
@@ -24,8 +26,32 @@ func ExceptionMiddleware() gin.HandlerFunc {
 				} else {
 					response_helper.Common(context, http.StatusInternalServerError, r.(string))
 				}
+				context.Abort() //终止请求
 			}
 		}()
+
+		context.Next()
+	}
+}
+
+// 授权校验中间件
+func AuthMiddleware() gin.HandlerFunc {
+	return func(context *gin.Context) {
+		token := context.GetHeader("Authorization")
+		if token == "" {
+			param := helper.Input(context, "token")
+			if value, exists := param["token"]; exists {
+				token = value.(string)
+			}
+		}
+		token = strings.Replace(token, "Bearer ", "", -1)
+		if token == "" {
+			helper.CommonException("请登录", http.StatusUnauthorized)
+		}
+		claims := jwt_helper.ParseToken(token)
+
+		data := claims["data"].(map[string]any)
+		context.Set("uid", data["uid"])
 
 		context.Next()
 	}

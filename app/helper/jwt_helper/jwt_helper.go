@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"go_test/app/helper"
+	"net/http"
 	"os"
 	"strconv"
 	"strings"
@@ -53,9 +54,9 @@ func ParseToken(tokenString string, ignore_exp ...bool) map[string]any {
 
 	if !ignore_exp_value && (err != nil || !token.Valid) {
 		if strings.Contains(err.Error(), "expired") {
-			helper.CommonException("token已过期")
+			helper.CommonException("token已过期", http.StatusUnauthorized)
 		} else {
-			helper.CommonException("token无效")
+			helper.CommonException("token无效", http.StatusUnauthorized)
 		}
 	}
 
