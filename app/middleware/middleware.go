@@ -1,11 +1,13 @@
 package middleware
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"go_test/app/helper"
 	"go_test/app/helper/jwt_helper"
 	"go_test/app/helper/response_helper"
 	"net/http"
+	"reflect"
 	"strings"
 )
 
@@ -24,7 +26,7 @@ func ExceptionMiddleware() gin.HandlerFunc {
 					r := r.(helper.MyException)
 					response_helper.Common(context, r.Code, r.Message, r.Data)
 				} else {
-					response_helper.Common(context, http.StatusInternalServerError, r.(string))
+					response_helper.Common(context, http.StatusInternalServerError, fmt.Sprintf("%v", reflect.ValueOf(r)))
 				}
 				context.Abort() //终止请求
 			}

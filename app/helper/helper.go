@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"reflect"
 	"strings"
+	"time"
 )
 
 // 获取请求参数-返回map类型
@@ -93,4 +94,9 @@ func InputStruct(c *gin.Context, param interface{}) {
 	data := Input(c)
 	mapstructure.Decode(data, param)
 	Check(param)
+}
+
+// 格式化日期时间
+func LocalTimeFormat(t time.Time) string {
+	return t.Format("2006-01-02 15:04:05")
 }
