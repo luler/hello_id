@@ -7,7 +7,7 @@ import (
 	uuid "github.com/satori/go.uuid"
 	"github.com/segmentio/ksuid"
 	"github.com/sony/sonyflake"
-	"go_test/helper/response_helper"
+	"go_test/app/helper/response_helper"
 	"strconv"
 )
 

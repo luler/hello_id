@@ -1,9 +1,9 @@
 package main
 
 import (
-	"go_test/helper"
-	"go_test/helper/db_helper"
-	"go_test/model"
+	"go_test/app/helper"
+	"go_test/app/helper/db_helper"
+	"go_test/app/model"
 	"os"
 )
 

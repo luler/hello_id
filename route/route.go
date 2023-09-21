@@ -2,8 +2,8 @@ package route
 
 import (
 	"github.com/gin-gonic/gin"
-	"go_test/controller/common"
-	"go_test/controller/login"
+	"go_test/app/controller/common"
+	"go_test/app/controller/login"
 )
 
 func InitRouter(e *gin.Engine) {

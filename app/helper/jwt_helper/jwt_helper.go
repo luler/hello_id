@@ -3,7 +3,7 @@ package jwt_helper
 import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
-	"go_test/helper"
+	"go_test/app/helper"
 	"os"
 	"strconv"
 	"strings"

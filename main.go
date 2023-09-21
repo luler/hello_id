@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"go_test/helper"
-	"go_test/middleware"
+	"go_test/app/helper"
+	"go_test/app/middleware"
 	"go_test/route"
 	"io/ioutil"
 	"os"

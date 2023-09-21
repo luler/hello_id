@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"go_test/helper"
-	"go_test/helper/response_helper"
+	"go_test/app/helper"
+	"go_test/app/helper/response_helper"
 	"net/http"
 )
 

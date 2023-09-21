@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"go_test/helper"
+	"go_test/app/helper"
 	"go_test/helper/jwt_helper"
 	"time"
 )
