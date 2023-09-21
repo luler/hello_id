@@ -5,6 +5,7 @@ import (
 	"go_test/helper"
 	"go_test/helper/response_helper"
 	"go_test/model"
+	"golang.org/x/crypto/bcrypt"
 	"os"
 )
 
@@ -19,8 +20,9 @@ func Login(c *gin.Context) {
 	err := helper.Db().Where("name=?", param.Name).First(&user)
 	if err.Error != nil {
 		if param.Name == os.Getenv("ADMIN_NAME") {
+			hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(os.Getenv("ADMIN_PASSWORD")), bcrypt.DefaultCost)
 			user.Name = param.Name
-			user.Password = os.Getenv("ADMIN_PASSWORD")
+			user.Password = string(hashedPassword)
 			user.Status = 1
 			res := helper.Db().Save(&user)
 			if res.Error != nil {
@@ -30,6 +32,16 @@ func Login(c *gin.Context) {
 		} else {
 			helper.CommonException("用户不存在")
 		}
+	}
+
+	//判断密码是否一致
+	passwordErr := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(param.Password))
+	if passwordErr != nil {
+		helper.CommonException("密码输入有误")
+	}
+	//是否启用
+	if user.Status != 1 {
+		helper.CommonException("用户已被禁用")
 	}
 
 	res := gin.H{
