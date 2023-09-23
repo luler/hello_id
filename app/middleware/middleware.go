@@ -14,11 +14,11 @@ import (
 // 初始化全局中间件
 func InitMiddleware(e *gin.Engine) {
 	//异常捕获中间件
-	e.Use(ExceptionMiddleware())
+	e.Use(Exception())
 }
 
 // 异常捕获中间件
-func ExceptionMiddleware() gin.HandlerFunc {
+func Exception() gin.HandlerFunc {
 	return func(context *gin.Context) {
 		defer func() {
 			if r := recover(); r != nil {
@@ -37,7 +37,7 @@ func ExceptionMiddleware() gin.HandlerFunc {
 }
 
 // 授权校验中间件
-func AuthMiddleware() gin.HandlerFunc {
+func Auth() gin.HandlerFunc {
 	return func(context *gin.Context) {
 		token := context.GetHeader("Authorization")
 		if token == "" {

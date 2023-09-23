@@ -1,4 +1,4 @@
-package login
+package controller
 
 import (
 	"github.com/gin-gonic/gin"

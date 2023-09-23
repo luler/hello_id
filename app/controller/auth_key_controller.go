@@ -1,4 +1,4 @@
-package auth_key
+package controller
 
 import (
 	"fmt"

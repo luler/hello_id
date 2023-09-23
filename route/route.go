@@ -2,10 +2,8 @@ package route
 
 import (
 	"github.com/gin-gonic/gin"
-	"go_test/app/controller/auth_key"
+	"go_test/app/controller"
 	"go_test/app/controller/common"
-	"go_test/app/controller/login"
-	"go_test/app/controller/user"
 	"go_test/app/middleware"
 )
 
@@ -17,9 +15,11 @@ func InitRouter(e *gin.Engine) {
 	e.Any("/xid", common.Xid)
 	e.Any("/ksuid", common.Ksuid)
 	//登录相关
-	e.POST("/login", login.Login)
-	api := e.Group("/api", middleware.AuthMiddleware())
-	api.GET("/getUserInfo", user.GetUserInfo)
-	api.POST("/saveAuthKey", auth_key.SaveAuthKey)
-	api.GET("/getAuthKeyList", auth_key.GetAuthKeyList)
+	e.POST("/login", controller.Login)
+	api := e.Group("/api", middleware.Auth())
+	api.GET("/getUserInfo", controller.GetUserInfo)
+	api.POST("/saveAuthKey", controller.SaveAuthKey)
+	api.GET("/getAuthKeyList", controller.GetAuthKeyList)
+	api.POST("/saveIdRule", controller.SaveIdRule)
+	api.GET("/getIdRuleList", controller.GetIdRuleList)
 }

@@ -15,7 +15,7 @@ func init() {
 func main() {
 
 	// 自动创建表
-	db_helper.Db().AutoMigrate(&model.User{}, &model.AuthKey{}, &model.HelloId{})
+	db_helper.Db().AutoMigrate(&model.User{}, &model.AuthKey{}, &model.IdRule{})
 
 	os.Exit(0)
 }
