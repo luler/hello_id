@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go_test/app/helper"
 	"go_test/app/helper/response_helper"
+	"go_test/app/logic"
 	"strconv"
 )
 
@@ -15,14 +16,16 @@ func GetId(c *gin.Context) {
 	}
 	var param Param
 	helper.InputStruct(c, &param)
-	length, _ := strconv.Atoi(param.Length.(string))
-	if param.Length == nil || param.Length == 0 {
-		length = 1
-	}
-	ids := []string{}
-	for i := 0; i < length; i++ {
 
+	var length int
+	if param.Length == nil {
+		length = 1
+	} else {
+		length, _ = strconv.Atoi(param.Length.(string))
 	}
+
+	ids := []string{}
+	ids = logic.GenerateId(param.Type, length)
 
 	response_helper.Success(c, "获取成功", ids)
 }
