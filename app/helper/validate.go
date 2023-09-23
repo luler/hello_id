@@ -9,6 +9,7 @@ import (
 )
 
 // 校验参数
+// 参考使用：https://pkg.go.dev/github.com/go-playground/validator/v10
 func Check(data interface{}) {
 	uni := ut.New(zh.New())
 	trans, _ := uni.GetTranslator("zh")
