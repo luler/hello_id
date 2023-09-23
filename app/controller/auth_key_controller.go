@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	uuid "github.com/satori/go.uuid"
 	"go_test/app/helper"
+	"go_test/app/helper/cache_helper"
 	"go_test/app/helper/db_helper"
 	"go_test/app/helper/response_helper"
 	"go_test/app/model"
@@ -49,4 +50,29 @@ func GetAuthKeyList(c *gin.Context) {
 		a["UpdatedAt"] = helper.LocalTimeFormat(a["UpdatedAt"].(time.Time))
 	}
 	response_helper.Success(c, "获取成功", res)
+}
+
+// 获取授权码列表
+func DelAuthKey(c *gin.Context) {
+	type Param struct {
+		Ids []interface{} `validate:"required,min=1"`
+	}
+	var param Param
+	helper.InputStruct(c, &param)
+
+	var authKeys []string
+	db_helper.Db().Model(&model.AuthKey{}).Where("id in ?", param.Ids).Pluck("auth_key", &authKeys)
+	if len(authKeys) == 0 {
+		helper.CommonException("授权码不存在")
+	}
+
+	if db_helper.Db().Where("id in ?", param.Ids).Delete(&model.AuthKey{}).Error != nil {
+		helper.CommonException("删除失败")
+	}
+	//删除缓存
+	for _, authKey := range authKeys {
+		key := "AuthKey:" + authKey
+		cache_helper.GoCache().Delete(key)
+	}
+	response_helper.Success(c, "删除成功")
 }

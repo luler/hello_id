@@ -19,7 +19,9 @@ func InitRouter(e *gin.Engine) {
 	api := e.Group("/api", middleware.Auth())
 	api.GET("/getUserInfo", controller.GetUserInfo)
 	api.POST("/saveAuthKey", controller.SaveAuthKey)
+	api.POST("/delAuthKey", controller.DelAuthKey)
 	api.GET("/getAuthKeyList", controller.GetAuthKeyList)
 	api.POST("/saveIdRule", controller.SaveIdRule)
 	api.GET("/getIdRuleList", controller.GetIdRuleList)
+	api.GET("/getId", middleware.AuthKey(), controller.GetId)
 }
