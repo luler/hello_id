@@ -1,7 +1,7 @@
 package main
 
 import (
-	"go_test/app/helper"
+	"go_test/app"
 	"go_test/app/helper/db_helper"
 	"go_test/app/model"
 	"os"
@@ -9,7 +9,7 @@ import (
 
 func init() {
 	//项目初始化
-	helper.InitApp()
+	app.InitApp()
 }
 
 func main() {

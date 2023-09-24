@@ -23,5 +23,6 @@ func InitRouter(e *gin.Engine) {
 	api.GET("/getAuthKeyList", controller.GetAuthKeyList)
 	api.POST("/saveIdRule", controller.SaveIdRule)
 	api.GET("/getIdRuleList", controller.GetIdRuleList)
-	api.GET("/getId", middleware.AuthKey(), controller.GetId)
+	api_not_auth := e.Group("/api")
+	api_not_auth.GET("/getId", middleware.AuthKey(), controller.GetId)
 }

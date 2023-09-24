@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"go_test/app/helper"
+	"go_test/app"
 	"go_test/app/middleware"
 	"go_test/route"
 	"io/ioutil"
@@ -11,7 +11,7 @@ import (
 
 func init() {
 	//项目初始化
-	helper.InitApp()
+	app.InitApp()
 }
 
 func main() {

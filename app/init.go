@@ -1,7 +1,8 @@
-package helper
+package app
 
 import (
 	"github.com/joho/godotenv"
+	"go_test/app/helper/cron_helper"
 	"go_test/app/helper/db_helper"
 	"go_test/app/helper/log_helper"
 )
@@ -14,4 +15,6 @@ func InitApp() {
 	db_helper.InitDb()
 	//初始化日志记录方式
 	log_helper.InitlogHelper()
+	//初始化定时任务
+	cron_helper.InitCron()
 }

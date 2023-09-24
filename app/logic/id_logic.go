@@ -11,12 +11,12 @@ import (
 	"time"
 )
 
-var lock1 sync.Mutex
-var lock2 sync.Mutex
+var lock sync.Mutex
 
+// 生成id
 func GenerateId(idRuleType string, length int) []string {
-	lock1.Lock()
-	defer lock1.Unlock()
+	lock.Lock()
+	defer lock.Unlock()
 
 	key := "IdRuleType:" + idRuleType
 	var idRule model.IdRule
@@ -36,27 +36,34 @@ func GenerateId(idRuleType string, length int) []string {
 	}
 	//缓存24小时
 	cache_helper.GoCache().Set(key, idRule, time.Hour*24)
-	go func() {
-		lock2.Lock()
-		defer lock2.Unlock()
-		var idRule2 model.IdRule
-		if ir2, found2 := cache_helper.GoCache().Get(key); found2 {
-			idRule2 = ir2.(model.IdRule)
+	return ids
+}
+
+// 刷新ID到数据库
+func FlushId() {
+	var idRules []model.IdRule
+	db_helper.Db().Select("type,current_id").Find(&idRules)
+	if len(idRules) == 0 {
+		return
+	}
+	var idRule model.IdRule
+	for _, id_rule := range idRules {
+		key := "IdRuleType:" + id_rule.Type
+		if ir, found := cache_helper.GoCache().Get(key); found {
+			idRule = ir.(model.IdRule)
 		} else { //缓存不存在不处理
 			return
-			log_helper.Debug("缓存不存在不处理")
 		}
-		if idRule.CurrentId != idRule2.CurrentId { //乐观锁，不相同不处理
+
+		if idRule.CurrentId <= id_rule.CurrentId { //没有增加则不处理
 			return
-			log_helper.Debug("乐观锁，不相同不处理")
 		}
 
 		//异步更新数据库
 		if err := db_helper.Db().Where("id=?", idRule.Id).Updates(&model.IdRule{
 			CurrentId: idRule.CurrentId,
 		}).Error; err != nil {
-			helper.CommonException("规则标识不存在")
+			log_helper.Error("更新异常：", err)
 		}
-	}()
-	return ids
+	}
 }
