@@ -8,13 +8,20 @@ import (
 )
 
 // 项目启动初始化
-func InitApp() {
-	//加载.env配置
-	godotenv.Load()
-	//初始化DB
-	db_helper.InitDb()
-	//初始化日志记录方式
-	log_helper.InitlogHelper()
-	//初始化定时任务
-	cron_helper.InitCron()
+func InitApp(initTypes ...string) {
+	for _, s := range initTypes {
+		switch s {
+		case "base":
+			//加载.env配置
+			godotenv.Load()
+			//初始化DB
+			db_helper.InitDb()
+			//初始化日志记录方式
+			log_helper.InitlogHelper()
+		case "cron":
+			//初始化定时任务
+			cron_helper.InitCron()
+		}
+	}
+
 }

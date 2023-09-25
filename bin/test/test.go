@@ -7,7 +7,7 @@ import (
 
 func init() {
 	//项目初始化
-	app.InitApp()
+	app.InitApp("base")
 }
 
 func main() {
