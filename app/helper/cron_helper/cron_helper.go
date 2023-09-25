@@ -3,6 +3,7 @@ package cron_helper
 import (
 	"github.com/gogits/cron"
 	"go_test/app/logic"
+	"go_test/app/middleware"
 	"sync"
 )
 
@@ -19,6 +20,9 @@ func InitCron() {
 
 		logic.FlushId()
 
+	})
+	c.AddFunc("定时清理ip限制缓存", "0 */1 * * * ?", func() {
+		middleware.ClearIpRateLimit()
 	})
 
 	c.Start()
