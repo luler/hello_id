@@ -1,5 +1,5 @@
 # 基于 Golang 官方镜像构建
-FROM golang:alpine
+FROM golang:1.21.0
 
 # 设置工作目录
 WORKDIR /app
@@ -14,8 +14,14 @@ COPY . .
 # 安装依赖
 RUN go mod download
 
+# 构建数据迁移程序
+RUN CGO_ENABLED=1 GOOS=linux go build -a -installsuffix cgo -o migrate ./bin/migrate/migrate.go
+
+#执行数据迁移程序
+RUN ./migrate
+
 # 构建二进制文件
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
+RUN CGO_ENABLED=1 GOOS=linux go build -a -installsuffix cgo -o main .
 
 # 运行二进制文件
 CMD ["./main"]

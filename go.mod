@@ -9,8 +9,11 @@ require (
 	github.com/go-playground/locales v0.14.1
 	github.com/go-playground/universal-translator v0.18.1
 	github.com/go-playground/validator/v10 v10.15.4
+	github.com/gogits/cron v0.0.0-20171120032916-9f6c956d3e14
 	github.com/goinggo/mapstructure v0.0.0-20140717182941-194205d9b4a9
+	github.com/iancoleman/strcase v0.3.0
 	github.com/joho/godotenv v1.5.1
+	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/rs/xid v1.5.0
 	github.com/satori/go.uuid v1.2.0
 	github.com/segmentio/ksuid v1.0.4
@@ -28,8 +31,6 @@ require (
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/goccy/go-json v0.10.0 // indirect
-	github.com/gogits/cron v0.0.0-20171120032916-9f6c956d3e14 // indirect
-	github.com/iancoleman/strcase v0.3.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
@@ -39,7 +40,6 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.17 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180228061459-e0a39a4cb421 // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
-	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
 	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.9 // indirect
