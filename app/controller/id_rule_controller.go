@@ -3,6 +3,7 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"go_test/app/helper"
+	"go_test/app/helper/cache_helper"
 	"go_test/app/helper/db_helper"
 	"go_test/app/helper/response_helper"
 	"go_test/app/model"
@@ -34,14 +35,43 @@ func SaveIdRule(c *gin.Context) {
 			Type: param.Type,
 		}
 		if param.CurrentId != nil {
-			idrule.CurrentId = param.CurrentId.(int)
+			idrule.CurrentId = int(param.CurrentId.(float64))
 		}
 		if err := db_helper.Db().Create(&idrule).Error; err != nil {
 			helper.CommonException("新增失败")
 		}
 	}
 
+	//删除缓存
+	key := "IdRuleType:" + param.Type
+	cache_helper.GoCache().Delete(key)
+
 	response_helper.Success(c, "保存成功")
+}
+
+// 删除ID规则
+func DelIdRule(c *gin.Context) {
+	type Param struct {
+		Ids []interface{} `validate:"required,min=1"`
+	}
+	var param Param
+	helper.InputStruct(c, &param)
+
+	var types []string
+	db_helper.Db().Model(&model.IdRule{}).Where("id in ?", param.Ids).Pluck("type", &types)
+	if len(types) == 0 {
+		helper.CommonException("ID规则不存在")
+	}
+
+	if db_helper.Db().Where("id in ?", param.Ids).Delete(&model.IdRule{}).Error != nil {
+		helper.CommonException("删除失败")
+	}
+	//删除缓存
+	for _, t := range types {
+		key := "IdRuleType:" + t
+		cache_helper.GoCache().Delete(key)
+	}
+	response_helper.Success(c, "删除成功")
 }
 
 // 获取授权码列表
