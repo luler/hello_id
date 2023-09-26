@@ -13,8 +13,11 @@ import (
 // 新增ID规则
 func SaveIdRule(c *gin.Context) {
 	type Param struct {
-		Type      string `validate:"required,alphanum" label:"规则标识"`
-		CurrentId any
+		Type        string `validate:"required,alphanum" label:"规则标识"`
+		CurrentId   any
+		Prefix      string
+		Suffix      string
+		FixedLength int16
 	}
 	var param Param
 	helper.InputStruct(c, &param)
@@ -26,16 +29,20 @@ func SaveIdRule(c *gin.Context) {
 			helper.CommonException("请设置当前ID")
 		}
 		if err := db_helper.Db().Model(&model.IdRule{}).Where("type=?", param.Type).Updates(model.IdRule{
-			CurrentId: int(param.CurrentId.(float64)),
+			CurrentId:   int(param.CurrentId.(float64)),
+			Prefix:      param.Prefix,
+			Suffix:      param.Suffix,
+			FixedLength: param.FixedLength,
 		}).Error; err != nil {
 			helper.CommonException("保存失败")
 		}
 	} else { //不存在
 		idrule := model.IdRule{
-			Type: param.Type,
-		}
-		if param.CurrentId != nil {
-			idrule.CurrentId = int(param.CurrentId.(float64))
+			Type:        param.Type,
+			CurrentId:   int(param.CurrentId.(float64)),
+			Prefix:      param.Prefix,
+			Suffix:      param.Suffix,
+			FixedLength: param.FixedLength,
 		}
 		if err := db_helper.Db().Create(&idrule).Error; err != nil {
 			helper.CommonException("新增失败")
