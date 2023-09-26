@@ -17,7 +17,7 @@ func SaveIdRule(c *gin.Context) {
 		CurrentId   any
 		Prefix      string
 		Suffix      string
-		FixedLength int16
+		FixedLength int
 	}
 	var param Param
 	helper.InputStruct(c, &param)
@@ -29,7 +29,7 @@ func SaveIdRule(c *gin.Context) {
 			helper.CommonException("请设置当前ID")
 		}
 		if err := db_helper.Db().Model(&model.IdRule{}).Where("type=?", param.Type).Updates(model.IdRule{
-			CurrentId:   int(param.CurrentId.(float64)),
+			CurrentId:   int64(param.CurrentId.(float64)),
 			Prefix:      param.Prefix,
 			Suffix:      param.Suffix,
 			FixedLength: param.FixedLength,
@@ -39,7 +39,7 @@ func SaveIdRule(c *gin.Context) {
 	} else { //不存在
 		idrule := model.IdRule{
 			Type:        param.Type,
-			CurrentId:   int(param.CurrentId.(float64)),
+			CurrentId:   int64(int(param.CurrentId.(float64))),
 			Prefix:      param.Prefix,
 			Suffix:      param.Suffix,
 			FixedLength: param.FixedLength,
