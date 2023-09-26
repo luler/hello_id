@@ -7,6 +7,7 @@ import (
 	"go_test/app/helper/log_helper"
 	"go_test/app/model"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 )
@@ -32,7 +33,66 @@ func GenerateId(idRuleType string, length int) []string {
 	ids := []string{}
 	for i := 0; i < length; i++ {
 		idRule.CurrentId += 1
-		ids = append(ids, strconv.Itoa(idRule.CurrentId))
+		id := strconv.FormatInt(idRule.CurrentId, 10)
+		//获取前缀
+		prefix := ""
+		if idRule.Prefix != "" {
+			prefixArr := strings.Split(idRule.Prefix, ",")
+			tn := time.Now()
+			for _, pre := range prefixArr {
+				switch pre {
+				case "年":
+					prefix = prefix + tn.Format("2006")
+				case "月":
+					prefix = prefix + tn.Format("01")
+				case "日":
+					prefix = prefix + tn.Format("02")
+				case "时":
+					prefix = prefix + tn.Format("15")
+				case "分":
+					prefix = prefix + tn.Format("04")
+				case "秒":
+					prefix = prefix + tn.Format("05")
+				default:
+					prefix = prefix + pre
+				}
+			}
+		}
+		//获取后缀
+		suffix := ""
+		if idRule.Suffix != "" {
+			suffixArr := strings.Split(idRule.Suffix, ",")
+			tn := time.Now()
+			for _, su := range suffixArr {
+				switch su {
+				case "年":
+					suffix = suffix + tn.Format("2006")
+				case "月":
+					suffix = suffix + tn.Format("01")
+				case "日":
+					suffix = suffix + tn.Format("02")
+				case "时":
+					suffix = suffix + tn.Format("15")
+				case "分":
+					suffix = suffix + tn.Format("04")
+				case "秒":
+					suffix = suffix + tn.Format("05")
+				default:
+					suffix = suffix + su
+				}
+			}
+		}
+		//限制固定长度
+		if idRule.FixedLength > 0 {
+			lll := len(prefix) + len(suffix) + len(id)
+			if lll > idRule.FixedLength { //已达最大长度限制
+				helper.CommonException("已达最大长度限制")
+			} else if lll < idRule.FixedLength { //小于长度需要补0
+				id = strings.Repeat("0", idRule.FixedLength-lll) + id
+			}
+		}
+		id = prefix + id + suffix
+		ids = append(ids, id)
 	}
 	//缓存24小时
 	cache_helper.GoCache().Set(key, idRule, time.Hour*24)
