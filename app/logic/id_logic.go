@@ -34,11 +34,11 @@ func GenerateId(idRuleType string, length int) []string {
 	for i := 0; i < length; i++ {
 		idRule.CurrentId += 1
 		id := strconv.FormatInt(idRule.CurrentId, 10)
+		tn := time.Now()
 		//获取前缀
 		prefix := ""
 		if idRule.Prefix != "" {
 			prefixArr := strings.Split(idRule.Prefix, ",")
-			tn := time.Now()
 			for _, pre := range prefixArr {
 				switch pre {
 				case "年":
@@ -62,7 +62,6 @@ func GenerateId(idRuleType string, length int) []string {
 		suffix := ""
 		if idRule.Suffix != "" {
 			suffixArr := strings.Split(idRule.Suffix, ",")
-			tn := time.Now()
 			for _, su := range suffixArr {
 				switch su {
 				case "年":
