@@ -7,7 +7,8 @@ import (
 	"go_test/app/helper/cache_helper"
 	"go_test/app/helper/db_helper"
 	"go_test/app/helper/exception_helper"
-	helper2 "go_test/app/helper/helper"
+	"go_test/app/helper/helper"
+	"go_test/app/helper/page_helper"
 	"go_test/app/helper/request_helper"
 	"go_test/app/helper/response_helper"
 	"go_test/app/model"
@@ -45,11 +46,11 @@ func SaveAuthKey(c *gin.Context) {
 
 // 获取授权码列表
 func GetAuthKeyList(c *gin.Context) {
-	res := helper2.AutoPage(c, db_helper.Db().Model(model.AuthKey{}))
+	res := page_helper.AutoPage(c, db_helper.Db().Model(model.AuthKey{}))
 
 	for _, a := range res["List"].([]map[string]interface{}) {
-		a["CreatedAt"] = helper2.LocalTimeFormat(a["CreatedAt"].(time.Time))
-		a["UpdatedAt"] = helper2.LocalTimeFormat(a["UpdatedAt"].(time.Time))
+		a["CreatedAt"] = helper.LocalTimeFormat(a["CreatedAt"].(time.Time))
+		a["UpdatedAt"] = helper.LocalTimeFormat(a["UpdatedAt"].(time.Time))
 	}
 	response_helper.Success(c, "获取成功", res)
 }
