@@ -3,7 +3,7 @@ package jwt_helper
 import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
-	"go_test/app/helper"
+	"go_test/app/helper/exception_helper"
 	"net/http"
 	"os"
 	"strconv"
@@ -31,7 +31,7 @@ func GenerateToken(data map[string]any) string {
 	tokenString, err := token.SignedString([]byte(jwt_secret))
 	if err != nil {
 		fmt.Println(err)
-		helper.CommonException("生成token失败")
+		exception_helper.CommonException("生成token失败")
 	}
 
 	return tokenString
@@ -54,9 +54,9 @@ func ParseToken(tokenString string, ignore_exp ...bool) map[string]any {
 
 	if !ignore_exp_value && (err != nil || !token.Valid) {
 		if strings.Contains(err.Error(), "expired") {
-			helper.CommonException("token已过期", http.StatusUnauthorized)
+			exception_helper.CommonException("token已过期", http.StatusUnauthorized)
 		} else {
-			helper.CommonException("token无效", http.StatusUnauthorized)
+			exception_helper.CommonException("token无效", http.StatusUnauthorized)
 		}
 	}
 

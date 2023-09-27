@@ -2,8 +2,8 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"go_test/app/helper"
 	"go_test/app/helper/db_helper"
+	"go_test/app/helper/exception_helper"
 	"go_test/app/helper/response_helper"
 	"go_test/app/model"
 )
@@ -16,7 +16,7 @@ func GetUserInfo(c *gin.Context) {
 	uid, _ := c.Get("uid")
 	err := db_helper.Db().Where("id=?", uid).Omit("password").First(&user)
 	if err.Error != nil {
-		helper.CommonException("用户不存在")
+		exception_helper.CommonException("用户不存在")
 	}
 
 	response_helper.Success(c, "获取成功", user)

@@ -2,7 +2,7 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"go_test/app/helper"
+	"go_test/app/helper/request_helper"
 	"go_test/app/helper/response_helper"
 	"go_test/app/logic"
 	"strconv"
@@ -15,7 +15,7 @@ func GetId(c *gin.Context) {
 		Length any
 	}
 	var param Param
-	helper.InputStruct(c, &param)
+	request_helper.InputStruct(c, &param)
 
 	var length int
 	if param.Length == nil {

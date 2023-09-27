@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"go_test/app/helper"
+	"go_test/app/helper/exception_helper"
 	"golang.org/x/time/rate"
 	"net/http"
 	"strconv"
@@ -34,7 +34,7 @@ func IpRateLimit(r int, b int) gin.HandlerFunc {
 			limiter.UpdatedAt = time.Now()
 			context.Next()
 		} else {
-			helper.CommonException("请求过于频繁，请稍后重试", http.StatusTooManyRequests)
+			exception_helper.CommonException("请求过于频繁，请稍后重试", http.StatusTooManyRequests)
 		}
 	}
 }

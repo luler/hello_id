@@ -2,9 +2,11 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"go_test/app/helper"
 	"go_test/app/helper/cache_helper"
 	"go_test/app/helper/db_helper"
+	"go_test/app/helper/exception_helper"
+	helper2 "go_test/app/helper/helper"
+	"go_test/app/helper/request_helper"
 	"go_test/app/helper/response_helper"
 	"go_test/app/model"
 	"time"
@@ -20,7 +22,7 @@ func SaveIdRule(c *gin.Context) {
 		FixedLength int
 	}
 	var param Param
-	helper.InputStruct(c, &param)
+	request_helper.InputStruct(c, &param)
 
 	var count int64
 	db_helper.Db().Model(&model.IdRule{}).Where("type=?", param.Type).Count(&count)
@@ -35,7 +37,7 @@ func SaveIdRule(c *gin.Context) {
 			Suffix:      param.Suffix,
 			FixedLength: param.FixedLength,
 		}).Error; err != nil {
-			helper.CommonException("保存失败")
+			exception_helper.CommonException("保存失败")
 		}
 	} else { //不存在
 		idrule := model.IdRule{
@@ -46,7 +48,7 @@ func SaveIdRule(c *gin.Context) {
 			FixedLength: param.FixedLength,
 		}
 		if err := db_helper.Db().Create(&idrule).Error; err != nil {
-			helper.CommonException("新增失败")
+			exception_helper.CommonException("新增失败")
 		}
 	}
 
@@ -63,16 +65,16 @@ func DelIdRule(c *gin.Context) {
 		Ids []interface{} `validate:"required,min=1"`
 	}
 	var param Param
-	helper.InputStruct(c, &param)
+	request_helper.InputStruct(c, &param)
 
 	var types []string
 	db_helper.Db().Model(&model.IdRule{}).Where("id in ?", param.Ids).Pluck("type", &types)
 	if len(types) == 0 {
-		helper.CommonException("ID规则不存在")
+		exception_helper.CommonException("ID规则不存在")
 	}
 
 	if db_helper.Db().Where("id in ?", param.Ids).Delete(&model.IdRule{}).Error != nil {
-		helper.CommonException("删除失败")
+		exception_helper.CommonException("删除失败")
 	}
 	//删除缓存
 	for _, t := range types {
@@ -84,11 +86,11 @@ func DelIdRule(c *gin.Context) {
 
 // 获取授权码列表
 func GetIdRuleList(c *gin.Context) {
-	res := helper.AutoPage(c, db_helper.Db().Model(model.IdRule{}))
+	res := helper2.AutoPage(c, db_helper.Db().Model(model.IdRule{}))
 
 	for _, a := range res["List"].([]map[string]interface{}) {
-		a["CreatedAt"] = helper.LocalTimeFormat(a["CreatedAt"].(time.Time))
-		a["UpdatedAt"] = helper.LocalTimeFormat(a["UpdatedAt"].(time.Time))
+		a["CreatedAt"] = helper2.LocalTimeFormat(a["CreatedAt"].(time.Time))
+		a["UpdatedAt"] = helper2.LocalTimeFormat(a["UpdatedAt"].(time.Time))
 	}
 	response_helper.Success(c, "获取成功", res)
 }

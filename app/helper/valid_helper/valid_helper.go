@@ -1,10 +1,11 @@
-package helper
+package valid_helper
 
 import (
 	"github.com/go-playground/locales/zh"
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
 	zh_translations "github.com/go-playground/validator/v10/translations/zh"
+	"go_test/app/helper/exception_helper"
 	"reflect"
 )
 
@@ -23,7 +24,7 @@ func Check(data interface{}) {
 	err := validate.Struct(data)
 	if err != nil {
 		for _, err := range err.(validator.ValidationErrors) {
-			CommonException(err.Translate(trans))
+			exception_helper.CommonException(err.Translate(trans))
 		}
 	}
 }

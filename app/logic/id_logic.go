@@ -1,9 +1,9 @@
 package logic
 
 import (
-	"go_test/app/helper"
 	"go_test/app/helper/cache_helper"
 	"go_test/app/helper/db_helper"
+	"go_test/app/helper/exception_helper"
 	"go_test/app/helper/log_helper"
 	"go_test/app/model"
 	"strconv"
@@ -23,7 +23,7 @@ func GenerateId(idRuleType string, length int) []string {
 	var idRule model.IdRule
 	if ir, found := cache_helper.GoCache().Get(key); !found {
 		if err := db_helper.Db().Where("type=?", idRuleType).First(&idRule).Error; err != nil {
-			helper.CommonException("规则标识不存在")
+			exception_helper.CommonException("规则标识不存在")
 		}
 		//缓存24小时
 		cache_helper.GoCache().Set(key, idRule, time.Hour*24)
@@ -85,7 +85,7 @@ func GenerateId(idRuleType string, length int) []string {
 		if idRule.FixedLength > 0 {
 			lll := len(prefix) + len(suffix) + len(id)
 			if lll > idRule.FixedLength { //已达最大长度限制
-				helper.CommonException("已达最大长度限制")
+				exception_helper.CommonException("已达最大长度限制")
 			} else if lll < idRule.FixedLength { //小于长度需要补0
 				id = strings.Repeat("0", idRule.FixedLength-lll) + id
 			}

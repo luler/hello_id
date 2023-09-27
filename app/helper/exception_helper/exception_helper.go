@@ -1,4 +1,4 @@
-package helper
+package exception_helper
 
 import (
 	"net/http"
