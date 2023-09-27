@@ -93,6 +93,34 @@ func InputStruct(c *gin.Context, param interface{}) {
 	valid_helper.Check(param)
 }
 
+// 获取参数并验证
+func ParamGetStruct(c *gin.Context, param interface{}) {
+	data := ParamGet(c)
+	mapstructure.Decode(data, param)
+	valid_helper.Check(param)
+}
+
+// 获取参数并验证
+func ParamPostFormStruct(c *gin.Context, param interface{}) {
+	data := ParamPostForm(c)
+	mapstructure.Decode(data, param)
+	valid_helper.Check(param)
+}
+
+// 获取参数并验证
+func ParamMultipartFormStruct(c *gin.Context, param interface{}) {
+	data := ParamMultipartForm(c)
+	mapstructure.Decode(data, param)
+	valid_helper.Check(param)
+}
+
+// 获取参数并验证
+func ParamRawJsonStruct(c *gin.Context, param interface{}) {
+	data := ParamRawJson(c)
+	mapstructure.Decode(data, param)
+	valid_helper.Check(param)
+}
+
 // 解析请求参数
 func extractParam(c *gin.Context, queryParams url.Values, t string) map[string]interface{} {
 	param := make(map[string]interface{})

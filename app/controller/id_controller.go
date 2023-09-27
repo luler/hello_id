@@ -15,7 +15,7 @@ func GetId(c *gin.Context) {
 		Length any
 	}
 	var param Param
-	request_helper.InputStruct(c, &param)
+	request_helper.ParamGetStruct(c, &param)
 
 	var length int
 	if param.Length == nil {

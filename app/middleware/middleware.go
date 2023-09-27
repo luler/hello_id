@@ -71,7 +71,7 @@ func AuthKey() gin.HandlerFunc {
 			AuthKey string `validate:"required,uuid4" label:"授权码"`
 		}
 		var param Param
-		request_helper.InputStruct(context, &param)
+		request_helper.ParamGetStruct(context, &param)
 
 		key := "AuthKey:" + param.AuthKey
 		if _, found := cache_helper.GoCache().Get(key); !found {
