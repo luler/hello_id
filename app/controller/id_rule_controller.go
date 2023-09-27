@@ -24,12 +24,13 @@ func SaveIdRule(c *gin.Context) {
 
 	var count int64
 	db_helper.Db().Model(&model.IdRule{}).Where("type=?", param.Type).Count(&count)
+	var cid int64
+	if param.CurrentId != nil {
+		cid = int64(param.CurrentId.(float64))
+	}
 	if count > 0 { //存在
-		if param.CurrentId == nil {
-			helper.CommonException("请设置当前ID")
-		}
 		if err := db_helper.Db().Model(&model.IdRule{}).Where("type=?", param.Type).Updates(model.IdRule{
-			CurrentId:   int64(param.CurrentId.(float64)),
+			CurrentId:   cid,
 			Prefix:      param.Prefix,
 			Suffix:      param.Suffix,
 			FixedLength: param.FixedLength,
@@ -39,7 +40,7 @@ func SaveIdRule(c *gin.Context) {
 	} else { //不存在
 		idrule := model.IdRule{
 			Type:        param.Type,
-			CurrentId:   int64(int(param.CurrentId.(float64))),
+			CurrentId:   cid,
 			Prefix:      param.Prefix,
 			Suffix:      param.Suffix,
 			FixedLength: param.FixedLength,
