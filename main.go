@@ -11,7 +11,7 @@ import (
 
 func init() {
 	//项目初始化
-	app.InitApp("base", "cron")
+	app.InitApp("base", "migrate", "cron")
 }
 
 func main() {

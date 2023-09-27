@@ -2,7 +2,7 @@ package main
 
 import (
 	"go_test/app"
-	"go_test/app/logic"
+	"go_test/app/helper/log_helper"
 )
 
 func init() {
@@ -22,5 +22,7 @@ func main() {
 	//	log_helper.Info(i, " 1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111")
 	//}
 
-	logic.FlushId()
+	//logic.FlushId()
+
+	log_helper.Error("你是谁")
 }

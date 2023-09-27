@@ -4,3 +4,5 @@ services:
     image: dreamplay/hello_id
     ports:
       - 3000:3000
+    volumes:
+      - ./runtime:/app/runtime

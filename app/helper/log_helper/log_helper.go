@@ -18,7 +18,7 @@ func InitlogHelper() {
 		FullTimestamp:   true, // 显示完整的时间戳
 	})
 	// 创建一个新的 lumberjack.Logger 实例
-	logFilePath := "./logs/app.log"
+	logFilePath := "./runtime/logs/app.log"
 	hook := &lumberjack.Logger{
 		Filename:   logFilePath,
 		MaxSize:    50,  // 单位：MB

@@ -5,6 +5,7 @@ import (
 	"go_test/app/helper/cron_helper"
 	"go_test/app/helper/db_helper"
 	"go_test/app/helper/log_helper"
+	"go_test/app/model"
 )
 
 // 项目启动初始化
@@ -21,6 +22,9 @@ func InitApp(initTypes ...string) {
 		case "cron":
 			//初始化定时任务
 			cron_helper.InitCron()
+		case "migrate":
+			// 自动创建表
+			db_helper.Db().AutoMigrate(&model.User{}, &model.AuthKey{}, &model.IdRule{})
 		}
 	}
 
