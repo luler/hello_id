@@ -13,33 +13,16 @@ import (
 
 // 获取请求参数-返回map类型
 func Input(c *gin.Context, fields ...string) map[string]interface{} {
-	param := make(map[string]interface{})
 	// 获取所有的 GET 参数
-	queryParams := c.Request.URL.Query()
-	for key, value := range extractParam(c, queryParams, "get") {
-		param[key] = value
-	}
+	param1 := ParamGet(c, fields...)
 	// 获取所有的 POST 参数
-	c.Request.ParseForm()
-	queryParams = c.Request.PostForm
-	for key, value := range extractParam(c, queryParams, "post") {
-		param[key] = value
-	}
+	param2 := ParamPostForm(c, fields...)
 	// 获取multi-form类型所有的 POST 参数
-	err := c.Request.ParseMultipartForm(32 << 24)
-	if err == nil {
-		queryParams = c.Request.MultipartForm.Value
-		for key, value := range extractParam(c, queryParams, "post") {
-			param[key] = value
-		}
-	}
+	param3 := ParamMultipartForm(c, fields...)
 	//获取json类型参数
-	raw, _ := c.GetRawData()
-	jsonData := make(map[string]interface{})
-	json.Unmarshal(raw, &jsonData)
-	for key, value := range jsonData {
-		param[key] = value
-	}
+	param4 := ParamRawJson(c, fields...)
+	//合并参数
+	param := helper.MergeMaps(param1, param2, param3, param4)
 	//参数过滤
 	param = helper.FilterMap(param, fields)
 	return param
