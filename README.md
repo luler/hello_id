@@ -2,7 +2,7 @@
 
 #### 介绍
 
-高性能生成snowflake id、sonyflake id、uuid v1、uuid v4服务
+高性能生成snowflake id、sonyflake id、uuid v1、uuid v4、xid、ksuid以及自定义ID的服务
 
 #### 安装
 
@@ -14,7 +14,7 @@ docker-compose up -d
 
 ##### 生成雪花id（基于时间、机器id、随机数生成，有序，整数类型）
 
-接口: http://ip:8080/snowflake
+接口: http://ip:8080/api/snowflake
 
 方法：GET、POST等
 
@@ -40,7 +40,7 @@ docker-compose up -d
 
 ##### 生成sonyflake id（snowflake的改进版本，可用时间更长，有序，整数类型）
 
-接口: http://ip:8080/sonyflake
+接口: http://ip:8080/api/sonyflake
 
 方法：GET、POST等
 
@@ -65,7 +65,7 @@ docker-compose up -d
 
 ##### 生成uuid V1 （根据时间、Mac地址等信息生成，有时间顺序）
 
-接口: http://ip:8080/uuid1
+接口: http://ip:8080/api/uuid1
 
 方法：GET、POST等
 
@@ -90,7 +90,7 @@ docker-compose up -d
 
 ##### 生成uuid V4 （完全随机生成，无序）
 
-接口: http://ip:8080/uuid4
+接口: http://ip:8080/api/uuid4
 
 方法：GET、POST等
 
@@ -115,7 +115,7 @@ docker-compose up -d
 
 ##### 生成xid（基于时间戳、随机数生成，有序）
 
-接口: http://ip:8080/xid
+接口: http://ip:8080/api/xid
 
 方法：GET、POST等
 
@@ -140,7 +140,7 @@ docker-compose up -d
 
 ##### 生成ksuid（基于时间戳、随机数生成，随机数比xid更大，唯一性更好，有序）
 
-接口: http://ip:8080/ksuid
+接口: http://ip:8080/api/ksuid
 
 方法：GET、POST等
 
