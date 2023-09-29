@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"go_test/app/helper/cache_helper"
 	"go_test/app/helper/db_helper"
@@ -16,6 +17,7 @@ import (
 // 新增ID规则
 func SaveIdRule(c *gin.Context) {
 	type Param struct {
+		Id          int
 		Type        string `validate:"required,alphanum" label:"规则标识"`
 		CurrentId   any
 		Prefix      string
@@ -30,6 +32,9 @@ func SaveIdRule(c *gin.Context) {
 	var cid int64
 	if param.CurrentId != nil {
 		cid = int64(param.CurrentId.(float64))
+	}
+	if count > 0 && param.Id == 0 {
+		exception_helper.CommonException("ID标识已存在")
 	}
 	if count > 0 { //存在
 		if err := db_helper.Db().Model(&model.IdRule{}).Where("type=?", param.Type).Updates(model.IdRule{
@@ -87,7 +92,17 @@ func DelIdRule(c *gin.Context) {
 
 // 获取授权码列表
 func GetIdRuleList(c *gin.Context) {
-	res := page_helper.AutoPage(c, db_helper.Db().Model(model.IdRule{}))
+	type Param struct {
+		Type string
+	}
+	var param Param
+	request_helper.InputStruct(c, &param)
+	db := db_helper.Db()
+	fmt.Println(222, param)
+	if param.Type != "" {
+		db = db.Where("type like ?", "%"+param.Type+"%")
+	}
+	res := page_helper.AutoPage(c, db.Order("id desc").Model(model.IdRule{}))
 
 	for _, a := range res["List"].([]map[string]interface{}) {
 		a["CreatedAt"] = helper.LocalTimeFormat(a["CreatedAt"].(time.Time))

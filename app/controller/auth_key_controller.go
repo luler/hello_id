@@ -46,7 +46,20 @@ func SaveAuthKey(c *gin.Context) {
 
 // 获取授权码列表
 func GetAuthKeyList(c *gin.Context) {
-	res := page_helper.AutoPage(c, db_helper.Db().Model(model.AuthKey{}))
+	type Param struct {
+		AuthKey string
+		Remark  string
+	}
+	var param Param
+	request_helper.InputStruct(c, &param)
+	db := db_helper.Db()
+	if param.AuthKey != "" {
+		db = db.Where("auth_key like ?", "%"+param.AuthKey+"%")
+	}
+	if param.Remark != "" {
+		db = db.Where("remark like ?", "%"+param.Remark+"%")
+	}
+	res := page_helper.AutoPage(c, db.Order("id desc").Model(model.AuthKey{}))
 
 	for _, a := range res["List"].([]map[string]interface{}) {
 		a["CreatedAt"] = helper.LocalTimeFormat(a["CreatedAt"].(time.Time))
