@@ -18,6 +18,7 @@ func InitRouter(e *gin.Engine) {
 	//登录相关
 	api.POST("/login", middleware.IpRateLimit(1, 1), controller.Login)
 	auth := api.Group("", middleware.Auth())
+	auth.POST("/resetPassword", controller.ResetPassword)
 	auth.GET("/getUserInfo", controller.GetUserInfo)
 	auth.POST("/saveAuthKey", controller.SaveAuthKey)
 	auth.POST("/delAuthKey", controller.DelAuthKey)

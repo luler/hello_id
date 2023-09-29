@@ -11,8 +11,10 @@ import (
 	"go_test/app/model"
 	"golang.org/x/crypto/bcrypt"
 	"os"
+	"regexp"
 )
 
+// 登录
 func Login(c *gin.Context) {
 	type Param struct {
 		Name     string `validate:"required,max=50" label:"账号"`
@@ -55,4 +57,28 @@ func Login(c *gin.Context) {
 	log_helper.Info("登录成功", res)
 
 	response_helper.Success(c, "登录成功", res)
+}
+
+// 重新设置密码
+func ResetPassword(c *gin.Context) {
+	type Param struct {
+		Password        string `validate:"required,min=5,max=20" label:"新密码"`
+		ConfirmPassword string
+	}
+	var param Param
+	request_helper.InputStruct(c, &param)
+	if param.Password != param.ConfirmPassword {
+		exception_helper.CommonException("确认密码输入有误")
+	}
+	matched, _ := regexp.MatchString("^[a-zA-Z0-9]+$", param.Password)
+	if !matched {
+		exception_helper.CommonException("密码只能包含数字或英文符号")
+	}
+	uid, _ := c.Get("uid")
+	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(param.Password), bcrypt.DefaultCost)
+	db_helper.Db().Where("id=?", uid).Updates(&model.User{
+		Password: string(hashedPassword),
+	})
+
+	response_helper.Success(c, "修改成功")
 }
