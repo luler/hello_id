@@ -25,12 +25,12 @@ export default [
   {
     path: '/idRule',
     name: '自定义ID',
-    icon: 'smile',
+    icon: 'FieldBinaryOutlined',
     component: './IdRule/IdRule',
   }, {
     path: '/AuthKey',
     name: '授权码',
-    icon: 'smile',
+    icon: 'KeyOutlined',
     component: './AuthKey/AuthKey',
   },
   {
