@@ -14,7 +14,7 @@ docker-compose up -d
 
 ##### 生成雪花id（基于时间、机器id、随机数生成，有序，整数类型）
 
-接口: http://ip:8080/api/snowflake
+接口: http://ip:3000/api/snowflake
 
 方法：GET、POST等
 
@@ -40,7 +40,7 @@ docker-compose up -d
 
 ##### 生成sonyflake id（snowflake的改进版本，可用时间更长，有序，整数类型）
 
-接口: http://ip:8080/api/sonyflake
+接口: http://ip:3000/api/sonyflake
 
 方法：GET、POST等
 
@@ -65,7 +65,7 @@ docker-compose up -d
 
 ##### 生成uuid V1 （根据时间、Mac地址等信息生成，有时间顺序）
 
-接口: http://ip:8080/api/uuid1
+接口: http://ip:3000/api/uuid1
 
 方法：GET、POST等
 
@@ -90,7 +90,7 @@ docker-compose up -d
 
 ##### 生成uuid V4 （完全随机生成，无序）
 
-接口: http://ip:8080/api/uuid4
+接口: http://ip:3000/api/uuid4
 
 方法：GET、POST等
 
@@ -115,7 +115,7 @@ docker-compose up -d
 
 ##### 生成xid（基于时间戳、随机数生成，有序）
 
-接口: http://ip:8080/api/xid
+接口: http://ip:3000/api/xid
 
 方法：GET、POST等
 
@@ -140,7 +140,7 @@ docker-compose up -d
 
 ##### 生成ksuid（基于时间戳、随机数生成，随机数比xid更大，唯一性更好，有序）
 
-接口: http://ip:8080/api/ksuid
+接口: http://ip:3000/api/ksuid
 
 方法：GET、POST等
 
@@ -160,5 +160,32 @@ docker-compose up -d
     "type": "ksuid"
   },
   "message": "创建成功"
+}
+```
+
+
+##### 生成自定义ID（简单定制化，原子有序）
+
+接口: http://ip:3000/api/getId
+
+方法：GET等
+
+请求参数：
+
+| 字段 | 是否必填 | 类型     | 描述          |
+|----|------|--------|-------------|
+|  Type  | 是    | string | ID标识        |
+|  AuthKey  | 是    | string | 	授权码        |
+|  Length  | 否    | int    | 	获取ID数量，默认1 |
+
+返回示例：
+
+```json
+{
+  "code": 200,
+  "data": [
+    "20230930000000114.go"
+  ],
+  "message": "获取成功"
 }
 ```
