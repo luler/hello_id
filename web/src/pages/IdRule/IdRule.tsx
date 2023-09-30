@@ -106,7 +106,11 @@ const Index: React.FC = () => {
         onFinish={values => {
           setLoading(true)
           // @ts-ignore
-          requestPost('/api/saveIdRule', values).then(res => {
+          requestPost('/api/saveIdRule', {
+            ...values,
+            Prefix: values.Prefix?.join(','),
+            Suffix: values.Suffix?.join(','),
+          }).then(res => {
             if (res.code === 200) {
               message.success(res.message)
               setmodalOpen(false)
