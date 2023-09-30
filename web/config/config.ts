@@ -4,6 +4,7 @@ import {join} from 'path';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 import routes from './routes';
+import {extraConfig} from "./extraConfig";
 
 const {REACT_APP_ENV = 'dev'} = process.env;
 
@@ -125,7 +126,7 @@ export default defineConfig({
    */
   headScripts: [
     // 解决首次加载时白屏的问题
-    {src: '/scripts/loading.js', async: true},
+    {src: extraConfig.routePrefix + 'scripts/loading.js', async: true},
   ],
   //================ pro 插件配置 =================
   presets: ['umi-presets-pro'],
@@ -152,4 +153,11 @@ export default defineConfig({
     strategy: 'normal',
   },
   requestRecord: {},
+
+  base: extraConfig.routePrefix,
+  publicPath: extraConfig.routePrefix,
+  manifest: {
+    basePath: extraConfig.routePrefix,
+  },
+  outputPath: 'dist' + extraConfig.routePrefix,
 });

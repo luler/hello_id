@@ -9,6 +9,7 @@ import defaultSettings from '../../../../config/defaultSettings';
 import React, {useState} from 'react';
 import {requestPost} from "@/utils/requestTool";
 import {setAccessToken} from "@/utils/authority";
+import {getFullPath} from "@/utils/utils";
 
 const Lang = () => {
   const langClassName = useEmotionCss(({token}) => {
@@ -82,7 +83,7 @@ const Login: React.FC = () => {
             minWidth: 280,
             maxWidth: '75vw',
           }}
-          logo={<img alt="logo" src="/favicon.ico"/>}
+          logo={<img alt="logo" src={getFullPath("/favicon.ico")}/>}
           title={defaultSettings.title}
           subTitle="高性能生成snowflake id、sonyflake id、uuid v1、uuid v4、xid、ksuid以及自定义ID的服务"
           initialValues={{

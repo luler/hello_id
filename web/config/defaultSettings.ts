@@ -1,4 +1,5 @@
 import {ProLayoutProps} from '@ant-design/pro-components';
+import {extraConfig} from "./extraConfig";
 
 /**
  * @name
@@ -17,7 +18,7 @@ const Settings: ProLayoutProps & {
   colorWeak: false,
   title: 'ID生成服务',
   pwa: true,
-  logo: '/favicon.ico',
+  logo: extraConfig.routePrefix + 'favicon.ico',
   iconfontUrl: '',
   token: {
     // 参见ts声明，demo 见文档，通过token 修改样式

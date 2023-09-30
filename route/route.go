@@ -5,9 +5,18 @@ import (
 	"go_test/app/controller"
 	"go_test/app/controller/common"
 	"go_test/app/middleware"
+	"net/http"
 )
 
 func InitRouter(e *gin.Engine) {
+	//前端路由
+	e.Static("/helloId", "./web/dist/helloId")
+	e.NoRoute(func(context *gin.Context) {
+		context.File("./web/dist/helloId/index.html")
+	})
+	e.GET("/", func(context *gin.Context) {
+		context.Redirect(http.StatusMovedPermanently, "/helloId/idRule")
+	})
 	api := e.Group("/api")
 	api.Any("/snowflake", common.Snowflake)
 	api.Any("/sonyflake", common.Sonyflake)
