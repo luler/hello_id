@@ -1,7 +1,6 @@
 package logic
 
 import (
-	"github.com/patrickmn/go-cache"
 	"go_test/app/helper/cache_helper"
 	"go_test/app/helper/db_helper"
 	"go_test/app/helper/exception_helper"
@@ -96,48 +95,30 @@ func GenerateId(idRuleType string, length int) []string {
 	}
 	//缓存24小时
 	cache_helper.GoCache().Set(key, idRule, time.Hour*24)
-	//存在ID变化
-	cronKey := "cronKey"
-	if _, found := cache_helper.GoCache().Get(cronKey); !found {
-		cache_helper.GoCache().Set(cronKey, 0, cache.NoExpiration)
-	}
-	cache_helper.GoCache().Increment(cronKey, 1)
 	return ids
 }
 
 // 刷新ID到数据库
 func FlushId() {
-	//存在ID变化
-	cronKey := "cronKey"
-	id, found := cache_helper.GoCache().Get(cronKey)
-	if !found || id == nil || id.(int) <= 0 {
-		return
-	}
-	cache_helper.GoCache().Decrement(cronKey, int64(id.(int)))
-
-	var idRules []model.IdRule
-	db_helper.Db().Select("type,current_id").Find(&idRules)
-	if len(idRules) == 0 {
-		return
-	}
 	var idRule model.IdRule
-	for _, id_rule := range idRules {
-		key := "IdRuleType:" + id_rule.Type
-		if ir, found := cache_helper.GoCache().Get(key); found {
-			idRule = ir.(model.IdRule)
-		} else { //缓存不存在不处理
-			return
-		}
+	items := cache_helper.GoCache().Items()
+	for k, v := range items {
+		if strings.HasPrefix(k, "IdRuleType:") {
+			idRule = v.Object.(model.IdRule)
+			keyId := "keyId:" + idRule.Type
+			if cacheCurrentId, exist := cache_helper.GoCache().Get(keyId); exist {
+				if cacheCurrentId == idRule.CurrentId {
+					continue
+				}
+			}
+			//异步更新数据库
+			if err := db_helper.Db().Where("id=?", idRule.Id).Updates(&model.IdRule{
+				CurrentId: idRule.CurrentId,
+			}).Error; err != nil {
+				log_helper.Error("更新异常：", err)
+			}
 
-		if idRule.CurrentId <= id_rule.CurrentId { //没有增加则不处理
-			return
-		}
-
-		//异步更新数据库
-		if err := db_helper.Db().Where("id=?", idRule.Id).Updates(&model.IdRule{
-			CurrentId: idRule.CurrentId,
-		}).Error; err != nil {
-			log_helper.Error("更新异常：", err)
+			cache_helper.GoCache().Set(keyId, idRule.CurrentId, time.Hour*24)
 		}
 	}
 }
