@@ -26,6 +26,7 @@ func InitRouter(e *gin.Engine) {
 	api.Any("/ksuid", common.Ksuid)
 	//登录相关
 	api.POST("/login", middleware.IpRateLimit(1, 1), controller.Login)
+	api.GET("/casLogin", controller.CasLogin)
 	auth := api.Group("", middleware.Auth())
 	auth.POST("/resetPassword", controller.ResetPassword)
 	auth.GET("/getUserInfo", controller.GetUserInfo)
