@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
+	"github.com/patrickmn/go-cache"
 	"go_test/app"
-	"go_test/app/helper/log_helper"
+	"go_test/app/helper/cache_helper"
 )
 
 func init() {
@@ -24,5 +26,12 @@ func main() {
 
 	//logic.FlushId()
 
-	log_helper.Error("你是谁")
+	//log_helper.Error("你是谁")
+	cache_helper.GoCache().Set("test", 1, cache.NoExpiration)
+	cache_helper.GoCache().Increment("test", 1)
+	cache_helper.GoCache().Increment("test", 1)
+	cache_helper.GoCache().Increment("test", 1)
+
+	fmt.Println(cache_helper.GoCache().Get("test"))
+
 }

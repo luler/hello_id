@@ -1,6 +1,7 @@
 package logic
 
 import (
+	"github.com/patrickmn/go-cache"
 	"go_test/app/helper/cache_helper"
 	"go_test/app/helper/db_helper"
 	"go_test/app/helper/exception_helper"
@@ -95,11 +96,25 @@ func GenerateId(idRuleType string, length int) []string {
 	}
 	//缓存24小时
 	cache_helper.GoCache().Set(key, idRule, time.Hour*24)
+	//存在ID变化
+	cronKey := "cronKey"
+	if _, found := cache_helper.GoCache().Get(cronKey); !found {
+		cache_helper.GoCache().Set(cronKey, 0, cache.NoExpiration)
+	}
+	cache_helper.GoCache().Increment(cronKey, 1)
 	return ids
 }
 
 // 刷新ID到数据库
 func FlushId() {
+	//存在ID变化
+	cronKey := "cronKey"
+	id, found := cache_helper.GoCache().Get(cronKey)
+	if !found || id == nil || id.(int) <= 0 {
+		return
+	}
+	cache_helper.GoCache().Decrement(cronKey, int64(id.(int)))
+
 	var idRules []model.IdRule
 	db_helper.Db().Select("type,current_id").Find(&idRules)
 	if len(idRules) == 0 {
