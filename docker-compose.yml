@@ -1,7 +1,7 @@
 version: "2"
 services:
-  go_test:
-    image: dreamplay/hello_id
+  hello_id:
+    image: ccr.ccs.tencentyun.com/luler/hello_id
     ports:
       - 3000:3000
     volumes:
