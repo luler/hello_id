@@ -95,7 +95,7 @@ func CasLogin(c *gin.Context) {
 
 	res := make(map[string]interface{})
 	json.Unmarshal(body, &res)
-	if res["code"] != 200 {
+	if int(res["code"].(float64)) != 200 {
 		exception_helper.CommonException(res["message"])
 	}
 
