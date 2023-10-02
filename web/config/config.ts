@@ -128,6 +128,9 @@ export default defineConfig({
     // 解决首次加载时白屏的问题
     {src: extraConfig.routePrefix + 'scripts/loading.js', async: true},
   ],
+  favicons: [
+    extraConfig.routePrefix + 'favicon.ico',
+  ],
   //================ pro 插件配置 =================
   presets: ['umi-presets-pro'],
   /**
