@@ -81,13 +81,11 @@ func GenerateId(idRuleType string, length int) []string {
 				}
 			}
 		}
-		//限制固定长度
-		if idRule.FixedLength > 0 {
-			lll := len(prefix) + len(suffix) + len(id)
-			if lll > idRule.FixedLength { //已达最大长度限制
-				exception_helper.CommonException("已达最大长度限制")
-			} else if lll < idRule.FixedLength { //小于长度需要补0
-				id = strings.Repeat("0", idRule.FixedLength-lll) + id
+		//限制最小长度
+		if idRule.MinLength > 0 {
+			lll := len(id)
+			if lll < idRule.MinLength { //已达最大长度限制
+				id = strings.Repeat("0", idRule.MinLength-lll) + id
 			}
 		}
 		id = prefix + id + suffix

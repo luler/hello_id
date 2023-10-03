@@ -17,12 +17,12 @@ import (
 // 新增ID规则
 func SaveIdRule(c *gin.Context) {
 	type Param struct {
-		Id          int
-		Type        string `validate:"required,alphanum" label:"规则标识"`
-		CurrentId   any
-		Prefix      string
-		Suffix      string
-		FixedLength int
+		Id        int
+		Type      string `validate:"required,alphanum" label:"规则标识"`
+		CurrentId any
+		Prefix    string
+		Suffix    string
+		MinLength int
 	}
 	var param Param
 	request_helper.InputStruct(c, &param)
@@ -38,20 +38,20 @@ func SaveIdRule(c *gin.Context) {
 	}
 	if count > 0 { //存在
 		if err := db_helper.Db().Model(&model.IdRule{}).Where("type=?", param.Type).Updates(model.IdRule{
-			CurrentId:   cid,
-			Prefix:      param.Prefix,
-			Suffix:      param.Suffix,
-			FixedLength: param.FixedLength,
+			CurrentId: cid,
+			Prefix:    param.Prefix,
+			Suffix:    param.Suffix,
+			MinLength: param.MinLength,
 		}).Error; err != nil {
 			exception_helper.CommonException("保存失败")
 		}
 	} else { //不存在
 		idrule := model.IdRule{
-			Type:        param.Type,
-			CurrentId:   cid,
-			Prefix:      param.Prefix,
-			Suffix:      param.Suffix,
-			FixedLength: param.FixedLength,
+			Type:      param.Type,
+			CurrentId: cid,
+			Prefix:    param.Prefix,
+			Suffix:    param.Suffix,
+			MinLength: param.MinLength,
 		}
 		if err := db_helper.Db().Create(&idrule).Error; err != nil {
 			exception_helper.CommonException("新增失败")

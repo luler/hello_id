@@ -49,10 +49,6 @@ const Index: React.FC = () => {
     return [
       <Button key="add" type="primary" icon={<PlusOutlined/>} onClick={() => {
         form.resetFields()
-        form.setFieldsValue({
-          CurrentId: 0,
-          FixedLength: 0,
-        })
         setModelTitle('新增授权码')
         setmodalOpen(true)
       }}>

@@ -31,8 +31,8 @@ const Index: React.FC = () => {
       search: false,
     },
     {
-      title: '固定长度',
-      dataIndex: 'FixedLength',
+      title: '递增值最小长度',
+      dataIndex: 'MinLength',
       search: false,
     },
     {
@@ -58,7 +58,7 @@ const Index: React.FC = () => {
         form.resetFields()
         form.setFieldsValue({
           CurrentId: 0,
-          FixedLength: 0,
+          MinLength: 0,
         })
         setModelTitle("新增ID规则")
         setmodalOpen(true)
@@ -186,8 +186,8 @@ const Index: React.FC = () => {
               min: 0,
             },
           ]}
-          name="FixedLength"
-          label="固定长度"
+          name="MinLength"
+          label="递增值最小长度"
           placeholder="请输入"
           tooltip="设为0时为不限制生成的ID的长度"
         />
