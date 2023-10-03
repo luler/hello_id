@@ -1,5 +1,5 @@
 import Footer from '@/components/Footer';
-import {SelectLang} from '@/components/RightContent';
+import {Question, SelectLang} from '@/components/RightContent';
 import {LinkOutlined} from '@ant-design/icons';
 import type {Settings as LayoutSettings} from '@ant-design/pro-components';
 import {SettingDrawer} from '@ant-design/pro-components';
@@ -56,7 +56,7 @@ export async function getInitialState(): Promise<{
 export const layout: RunTimeLayoutConfig = ({initialState, setInitialState}) => {
   return {
     actionsRender: () => [
-      // <Question key="doc"/>,
+      <Question key="doc"/>,
       <SelectLang key="SelectLang"/>,
     ],
     avatarProps: {

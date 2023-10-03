@@ -17,6 +17,9 @@ func InitRouter(e *gin.Engine) {
 	e.GET("/", func(context *gin.Context) {
 		context.Redirect(http.StatusMovedPermanently, "/helloId/idRule")
 	})
+	e.GET("/api/README.md", func(context *gin.Context) {
+		context.File("./README.md")
+	})
 	api := e.Group("/api")
 	api.Any("/snowflake", common.Snowflake)
 	api.Any("/sonyflake", common.Sonyflake)

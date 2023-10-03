@@ -53,4 +53,5 @@ export default {
   //自定义菜单
   'menu.自定义ID': '自定义ID',
   'menu.授权码': '授权码',
+  'menu.接口文档': '接口文档',
 };

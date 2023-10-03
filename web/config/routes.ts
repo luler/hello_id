@@ -27,11 +27,19 @@ export default [
     name: '自定义ID',
     icon: 'FieldBinaryOutlined',
     component: './IdRule/IdRule',
-  }, {
+  },
+  {
     path: '/AuthKey',
     name: '授权码',
     icon: 'KeyOutlined',
     component: './AuthKey/AuthKey',
+  },
+  {
+    path: '/readme',
+    name: '接口文档',
+    icon: 'book',
+    component: './readme/readme',
+    hideInMenu: true,
   },
   {
     path: '/',

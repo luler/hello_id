@@ -6,6 +6,7 @@ import {requestGet, requestPost} from "@/utils/requestTool";
 
 const Index: React.FC = () => {
   const [modalOpen, setmodalOpen] = useState(false)
+  const [modelTitle, setModelTitle] = useState('新增ID规则')
   const [form] = Form.useForm();
   const actionRef = useRef();
   const [loading, setLoading] = useState(false);
@@ -40,6 +41,7 @@ const Index: React.FC = () => {
       render: record => {
         return <>
           <a onClick={() => {
+            setModelTitle('编辑ID规则')
             setmodalOpen(true)
             let data = {...record}
             data.Prefix = data.Prefix.split(',').filter((item: string) => item !== '')
@@ -58,6 +60,7 @@ const Index: React.FC = () => {
           CurrentId: 0,
           FixedLength: 0,
         })
+        setModelTitle("新增ID规则")
         setmodalOpen(true)
       }}>
         添加
@@ -96,7 +99,7 @@ const Index: React.FC = () => {
       />
       <ModalForm
         width={500}
-        title={form.getFieldValue('Id') > 0 ? '编辑ID规则' : '新增ID规则'}
+        title={modelTitle}
         open={modalOpen}
         form={form}
         loading={loading}

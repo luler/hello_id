@@ -13,6 +13,7 @@ import {requestGet, requestPost} from "@/utils/requestTool";
 
 const Index: React.FC = () => {
   const [modalOpen, setmodalOpen] = useState(false)
+  const [modelTitle, setModelTitle] = useState('新增授权码')
   const [form] = Form.useForm();
   const actionRef = useRef();
   const [loading, setLoading] = useState(false);
@@ -35,6 +36,7 @@ const Index: React.FC = () => {
       render: record => {
         return <>
           <a onClick={() => {
+            setModelTitle('编辑授权码')
             setmodalOpen(true)
             let data = {...record}
             form.setFieldsValue(data)
@@ -51,6 +53,7 @@ const Index: React.FC = () => {
           CurrentId: 0,
           FixedLength: 0,
         })
+        setModelTitle('新增授权码')
         setmodalOpen(true)
       }}>
         添加
@@ -89,7 +92,7 @@ const Index: React.FC = () => {
       />
       <ModalForm
         width={500}
-        title={form.getFieldValue('Id') > 0 ? '编辑授权码' : '新增授权码'}
+        title={modelTitle}
         open={modalOpen}
         form={form}
         loading={loading}
