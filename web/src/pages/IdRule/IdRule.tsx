@@ -1,6 +1,6 @@
 import {PlusOutlined} from '@ant-design/icons';
 import {ModalForm, PageContainer, ProFormDigit, ProFormSelect, ProFormText, ProTable} from '@ant-design/pro-components';
-import {Button, Divider, Form, message, Modal} from 'antd';
+import {Button, Divider, Form, Input, message, Modal, Popconfirm} from 'antd';
 import React, {useRef, useState} from 'react';
 import {requestGet, requestPost} from "@/utils/requestTool";
 
@@ -41,6 +41,25 @@ const Index: React.FC = () => {
       render: record => {
         return <>
           <a onClick={() => {
+            requestGet('/api/createId', {Type: record.Type}).then(res => {
+              if (res.code === 200) {
+                Modal.info({
+                  closable: true,
+                  icon: null,
+                  footer: null,
+                  title: '标识"' + record.Type + '"成功生成如下ID',
+                  content: <div style={{paddingBottom: 20, paddingTop: 10,}}>
+                    <Input value={res.data[0]} disabled/>
+                  </div>,
+                })
+                setTimeout(() => {
+                  actionRef.current.reload()
+                }, 1500)
+              }
+            })
+          }}>生成</a>
+          <Divider type="vertical"/>
+          <a onClick={() => {
             setModelTitle('编辑ID规则')
             setmodalOpen(true)
             let data = {...record}
@@ -49,21 +68,20 @@ const Index: React.FC = () => {
             form.setFieldsValue(data)
           }}>编辑</a>
           <Divider type="vertical"/>
-          <a style={{color: 'red',}} onClick={() => {
-            Modal.confirm({
-              title: '您确定要删除吗？',
-              content: '删除后，数据将无法恢复，请慎重！',
-              onOk: e => {
-                requestPost('/api/delIdRule', {Ids: [record.Id]}).then(res => {
-                  if (res.code === 200) {
-                    message.success(res.message)
-                    actionRef.current.reload()
-                    e()
-                  }
-                })
-              }
-            })
-          }}>删除</a>
+          <Popconfirm
+            title='您确定要删除吗？'
+            description='删除后，数据将无法恢复，请慎重！'
+            onConfirm={e => {
+              requestPost('/api/delIdRule', {Ids: [record.Id]}).then(res => {
+                if (res.code === 200) {
+                  message.success(res.message)
+                  actionRef.current.reload()
+                }
+              })
+            }}
+          >
+            <a style={{color: 'red',}}>删除</a>
+          </Popconfirm>
         </>
       }
     },

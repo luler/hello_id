@@ -39,5 +39,6 @@ func InitRouter(e *gin.Engine) {
 	auth.POST("/saveIdRule", controller.SaveIdRule)
 	auth.POST("/delIdRule", controller.DelIdRule)
 	auth.GET("/getIdRuleList", controller.GetIdRuleList)
+	auth.GET("/createId", controller.GetId)
 	api.GET("/getId", middleware.AuthKey(), controller.GetId)
 }
