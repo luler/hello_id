@@ -13,31 +13,31 @@ const Index: React.FC = () => {
     const columns = [
         {
             title: 'ID标识',
-            dataIndex: 'Type',
+            dataIndex: 'type',
         },
         {
             title: '当前递增值',
-            dataIndex: 'CurrentId',
+            dataIndex: 'currentId',
             search: false,
         },
         {
             title: '前缀',
-            dataIndex: 'Prefix',
+            dataIndex: 'prefix',
             search: false,
         },
         {
             title: '后缀',
-            dataIndex: 'Suffix',
+            dataIndex: 'suffix',
             search: false,
         },
         {
             title: '递增值最小长度',
-            dataIndex: 'MinLength',
+            dataIndex: 'minLength',
             search: false,
         },
         {
             title: '创建时间',
-            dataIndex: 'CreatedAt',
+            dataIndex: 'createdAt',
             search: false,
         },
         {
@@ -46,13 +46,13 @@ const Index: React.FC = () => {
             render: record => {
                 return <>
                     <a onClick={() => {
-                        requestGet('/api/createId', {Type: record.Type}).then(res => {
+                        requestGet('/api/createId', {type: record.type}).then(res => {
                             if (res.code === 200) {
                                 Modal.info({
                                     closable: true,
                                     icon: null,
                                     footer: null,
-                                    title: '标识"' + record.Type + '"成功生成如下ID',
+                                    title: '标识"' + record.type + '"成功生成如下ID',
                                     content: <div style={{paddingBottom: 20, paddingTop: 10,}}>
                                         <Input value={res.data[0]} disabled/>
                                     </div>,
@@ -68,8 +68,8 @@ const Index: React.FC = () => {
                         setModelTitle('编辑ID规则')
                         setmodalOpen(true)
                         let data = {...record}
-                        data.Prefix = data.Prefix.split(',').filter((item: string) => item !== '')
-                        data.Suffix = data.Suffix.split(',').filter((item: string) => item !== '')
+                        data.prefix = data.prefix.split(',').filter((item: string) => item !== '')
+                        data.suffix = data.suffix.split(',').filter((item: string) => item !== '')
                         form.setFieldsValue(data)
                     }}>编辑</a>
                     <Divider type="vertical"/>
@@ -77,7 +77,7 @@ const Index: React.FC = () => {
                         title='您确定要删除吗？'
                         description='删除后，数据将无法恢复，请慎重！'
                         onConfirm={e => {
-                            requestPost('/api/delIdRule', {Ids: [record.Id]}).then(res => {
+                            requestPost('/api/delIdRule', {ids: [record.id]}).then(res => {
                                 if (res.code === 200) {
                                     message.success(res.message)
                                     actionRef.current.reload()
@@ -112,16 +112,16 @@ const Index: React.FC = () => {
             success: true,
             total: 0,
         }
-        params.Page = params.current || 1
-        params.PageSize = params.pageSize || 10
+        params.page = params.current || 1
+        params.pageSize = params.pageSize || 10
         await requestGet('/api/getIdRuleList', params).then(res => {
             value.success = res.code === 200 ? true : false
-            value.data = res.data.List || []
+            value.data = res.data.list || []
             value.data = value.data.map(item => {
-                item.key = item.Id
+                item.key = item.id
                 return item
             })
-            value.total = res.data.Total || 0
+            value.total = res.data.total || 0
         })
         return Promise.resolve(value)
     }
@@ -164,7 +164,7 @@ const Index: React.FC = () => {
                 }}
             >
                 <ProFormDigit
-                    name="Id"
+                    name="id"
                     hidden={true}
                 />
                 <ProFormText
@@ -174,7 +174,7 @@ const Index: React.FC = () => {
                             message: "请输入",
                         },
                     ]}
-                    name="Type"
+                    name="type"
                     label="ID标识"
                     placeholder="请输入"
                 />
@@ -185,13 +185,13 @@ const Index: React.FC = () => {
                             min: 0,
                         },
                     ]}
-                    name="CurrentId"
+                    name="currentId"
                     label="当前递增值"
                     placeholder="请输入"
                     tooltip="ID递增的起始值"
                 />
                 <ProFormSelect
-                    name="Prefix"
+                    name="prefix"
                     mode="tags"
                     label="前缀"
                     placeholder="请输入"
@@ -205,7 +205,7 @@ const Index: React.FC = () => {
                     ]}
                 />
                 <ProFormSelect
-                    name="Suffix"
+                    name="suffix"
                     mode="tags"
                     label="后缀"
                     placeholder="请输入"
@@ -225,7 +225,7 @@ const Index: React.FC = () => {
                             min: 0,
                         },
                     ]}
-                    name="MinLength"
+                    name="minLength"
                     label="递增值最小长度"
                     placeholder="请输入"
                     tooltip="设为0时为不限制生成的ID的长度"

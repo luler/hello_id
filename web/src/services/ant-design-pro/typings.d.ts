@@ -3,9 +3,9 @@
 
 declare namespace API {
   type CurrentUser = {
-    Id?: number;
-    Name?: string;
-    Status?: number;
+    id?: number;
+    name?: string;
+    status?: number;
   };
 
   type LoginResult = {

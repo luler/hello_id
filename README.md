@@ -33,7 +33,7 @@ docker-compose up -d
   "data": {
     "id": "1697622854507429888",
     "type": "snowflake",
-    "worker_id": 0
+    "workerId": 0
   },
   "message": "创建成功"
 }
@@ -175,9 +175,9 @@ docker-compose up -d
 
 | 字段      | 是否必填 | 类型     | 描述          |
 |---------|------|--------|-------------|
-| Type    | 是    | string | ID标识        |
-| AuthKey | 是    | string | 	授权码        |
-| Length  | 否    | int    | 	获取ID数量，默认1，最大500   |
+| type    | 是    | string | ID标识        |
+| authKey | 是    | string | 	授权码        |
+| length  | 否    | int    | 	获取ID数量，默认1，最大500   |
 
 返回示例：
 

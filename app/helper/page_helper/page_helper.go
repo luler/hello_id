@@ -50,16 +50,16 @@ func AutoPage(c *gin.Context, db *gorm.DB) map[string]interface{} {
 		converted := make(map[string]interface{})
 		for key, value := range item {
 			// 将字段名转换为大驼峰
-			convertedKey := strcase.ToCamel(key)
+			convertedKey := strcase.ToLowerCamel(key)
 			converted[convertedKey] = value
 		}
 		data[key] = converted
 	}
 	res := make(map[string]interface{})
-	res["List"] = data
-	res["Page"] = param.Page
-	res["PageSize"] = param.PageSize
-	res["Total"] = total
+	res["list"] = data
+	res["page"] = param.Page
+	res["pageSize"] = param.PageSize
+	res["total"] = total
 
 	return res
 }

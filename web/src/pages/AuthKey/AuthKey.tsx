@@ -19,21 +19,21 @@ const Index: React.FC = () => {
     const [loading, setLoading] = useState(false);
     const columns = [
         {
-            title: 'ID',
-            dataIndex: 'Id',
+            title: 'id',
+            dataIndex: 'id',
             search: false,
         },
         {
             title: '授权码',
-            dataIndex: 'AuthKey',
+            dataIndex: 'authKey',
         },
         {
             title: '描述',
-            dataIndex: 'Remark',
+            dataIndex: 'remark',
         },
         {
             title: '创建时间',
-            dataIndex: 'CreatedAt',
+            dataIndex: 'createdAt',
             search: false,
         },
         {
@@ -52,7 +52,7 @@ const Index: React.FC = () => {
                         title='您确定要删除吗？'
                         description='删除后，数据将无法恢复，请慎重！'
                         onConfirm={e => {
-                            requestPost('/api/delAuthKey', {Ids: [record.Id]}).then(res => {
+                            requestPost('/api/delAuthKey', {ids: [record.id]}).then(res => {
                                 if (res.code === 200) {
                                     message.success(res.message)
                                     actionRef.current.reload()
@@ -83,16 +83,16 @@ const Index: React.FC = () => {
             success: true,
             total: 0,
         }
-        params.Page = params.current || 1
-        params.PageSize = params.pageSize || 10
+        params.page = params.current || 1
+        params.pageSize = params.pageSize || 10
         await requestGet('/api/getAuthKeyList', params).then(res => {
             value.success = res.code === 200 ? true : false
-            value.data = res.data.List || []
+            value.data = res.data.list || []
             value.data = value.data.map(item => {
                 item.key = item.Id
                 return item
             })
-            value.total = res.data.Total || 0
+            value.total = res.data.total || 0
         })
         return Promise.resolve(value)
     }
@@ -131,11 +131,11 @@ const Index: React.FC = () => {
                 }}
             >
                 <ProFormDigit
-                    name="Id"
+                    name="id"
                     hidden={true}
                 />
                 <ProFormText
-                    name="AuthKey"
+                    name="authKey"
                     label="授权码"
                     placeholder="自动生成"
                     disabled
@@ -147,7 +147,7 @@ const Index: React.FC = () => {
                             message: "请输入",
                         },
                     ]}
-                    name="Remark"
+                    name="remark"
                     label="描述"
                     placeholder="请输入"
                 />

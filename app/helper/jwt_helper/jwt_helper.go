@@ -69,8 +69,8 @@ func ParseToken(tokenString string, ignore_exp ...bool) map[string]any {
 // 签发token
 func IssueToken(data map[string]any) map[string]any {
 	return map[string]any{
-		"type":       "Bearer",
-		"token":      GenerateToken(data),
-		"jwt_expire": GetJwtExpire(),
+		"type":      "Bearer",
+		"token":     GenerateToken(data),
+		"jwtExpire": GetJwtExpire(),
 	}
 }

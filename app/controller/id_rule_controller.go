@@ -104,9 +104,9 @@ func GetIdRuleList(c *gin.Context) {
 	}
 	res := page_helper.AutoPage(c, db.Order("id desc").Model(model.IdRule{}))
 
-	for _, a := range res["List"].([]map[string]interface{}) {
-		a["CreatedAt"] = helper.LocalTimeFormat(a["CreatedAt"].(time.Time))
-		a["UpdatedAt"] = helper.LocalTimeFormat(a["UpdatedAt"].(time.Time))
+	for _, a := range res["list"].([]map[string]interface{}) {
+		a["createdAt"] = helper.LocalTimeFormat(a["createdAt"].(time.Time))
+		a["updatedAt"] = helper.LocalTimeFormat(a["updatedAt"].(time.Time))
 	}
 	response_helper.Success(c, "获取成功", res)
 }

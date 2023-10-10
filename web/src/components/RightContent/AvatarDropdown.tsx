@@ -18,7 +18,7 @@ export type GlobalHeaderRightProps = {
 export const AvatarName = () => {
   const {initialState} = useModel('@@initialState');
   const {currentUser} = initialState || {};
-  return <span className="anticon">{currentUser?.Name}</span>;
+  return <span className="anticon">{currentUser?.name}</span>;
 };
 
 export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({menu, children}) => {
@@ -67,14 +67,14 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({menu, children
                 <Form.Item label="新密码" required>
                   <Password
                     onChange={event => {
-                      passwordData.Password = event.target.value
+                      passwordData.password = event.target.value
                     }}
                   />
                 </Form.Item>
                 <Form.Item label="确认密码" required>
                   <Password
                     onChange={event => {
-                      passwordData.ConfirmPassword = event.target.value
+                      passwordData.confirmPassword = event.target.value
                     }}
                   />
                 </Form.Item>
@@ -119,7 +119,7 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({menu, children
 
   const {currentUser} = initialState;
 
-  if (!currentUser || !currentUser.Name) {
+  if (!currentUser || !currentUser.name) {
     return loading;
   }
 
