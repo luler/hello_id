@@ -1,18 +1,15 @@
 package controller
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	uuid "github.com/satori/go.uuid"
 	"go_test/app/helper/cache_helper"
 	"go_test/app/helper/db_helper"
 	"go_test/app/helper/exception_helper"
-	"go_test/app/helper/helper"
 	"go_test/app/helper/page_helper"
 	"go_test/app/helper/request_helper"
 	"go_test/app/helper/response_helper"
 	"go_test/app/model"
-	"time"
 )
 
 // 新增授权码
@@ -37,7 +34,6 @@ func SaveAuthKey(c *gin.Context) {
 		uuid4 := uuid.NewV4().String()
 		auth_key.AuthKey = uuid4
 		if err := db_helper.Db().Create(&auth_key).Error; err != nil {
-			fmt.Println(err)
 			exception_helper.CommonException("新增失败")
 		}
 	}
@@ -61,10 +57,6 @@ func GetAuthKeyList(c *gin.Context) {
 	}
 	res := page_helper.AutoPage(c, db.Order("id desc").Model(model.AuthKey{}))
 
-	for _, a := range res["list"].([]map[string]interface{}) {
-		a["createdAt"] = helper.LocalTimeFormat(a["createdAt"].(time.Time))
-		a["updatedAt"] = helper.LocalTimeFormat(a["updatedAt"].(time.Time))
-	}
 	response_helper.Success(c, "获取成功", res)
 }
 

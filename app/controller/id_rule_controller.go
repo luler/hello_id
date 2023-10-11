@@ -1,17 +1,14 @@
 package controller
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"go_test/app/helper/cache_helper"
 	"go_test/app/helper/db_helper"
 	"go_test/app/helper/exception_helper"
-	"go_test/app/helper/helper"
 	"go_test/app/helper/page_helper"
 	"go_test/app/helper/request_helper"
 	"go_test/app/helper/response_helper"
 	"go_test/app/model"
-	"time"
 )
 
 // 新增ID规则
@@ -98,15 +95,10 @@ func GetIdRuleList(c *gin.Context) {
 	var param Param
 	request_helper.InputStruct(c, &param)
 	db := db_helper.Db()
-	fmt.Println(222, param)
 	if param.Type != "" {
 		db = db.Where("type like ?", "%"+param.Type+"%")
 	}
 	res := page_helper.AutoPage(c, db.Order("id desc").Model(model.IdRule{}))
 
-	for _, a := range res["list"].([]map[string]interface{}) {
-		a["createdAt"] = helper.LocalTimeFormat(a["createdAt"].(time.Time))
-		a["updatedAt"] = helper.LocalTimeFormat(a["updatedAt"].(time.Time))
-	}
 	response_helper.Success(c, "获取成功", res)
 }
