@@ -3,6 +3,10 @@ services:
   hello_id:
     image: ccr.ccs.tencentyun.com/luler/hello_id
     privileged: true
+    environment:
+      - ADMIN_NAME=admin      #管理员账号
+      - ADMIN_PASSWORD=admin  #管理员登录密码
+      - JWT_SECRET=FYDE7x5A   #页面访问token加密秘钥，自定义一个复杂的
     ports:
       - 2023:3000
     volumes:
