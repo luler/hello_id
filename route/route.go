@@ -11,8 +11,6 @@ import (
 )
 
 func InitRouter(e *gin.Engine) {
-	//swagger页面
-	e.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	//前端路由
 	e.Static("/helloId", "./web/dist/helloId")
 	e.NoRoute(func(context *gin.Context) {
@@ -25,6 +23,8 @@ func InitRouter(e *gin.Engine) {
 		context.File("./README.md")
 	})
 	api := e.Group("/api")
+	//swagger页面
+	api.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	api.Any("/snowflake", common.Snowflake)
 	api.Any("/sonyflake", common.Sonyflake)
 	api.Any("/uuid1", common.Uuid1)
