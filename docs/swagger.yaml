@@ -1,0 +1,154 @@
+info:
+  contact:
+    email: 1207032539@qq.com
+    name: 开发人员
+    url: https://cas.luler.top/
+  description: 当前页面用于展示项目一些开放的接口
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: 接口文档
+  version: "1.0"
+paths:
+  /api/getId:
+    get:
+      consumes:
+      - application/json
+      description: 生成自定义ID
+      parameters:
+      - description: ID标识
+        in: query
+        name: type
+        required: true
+        type: string
+      - description: 授权码
+        in: query
+        name: authKey
+        required: true
+        type: string
+      - description: 获取ID数量，默认1，最大500
+        in: query
+        name: length
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 生成自定义ID
+      tags:
+      - ID生成相关接口
+  /api/ksuid:
+    get:
+      consumes:
+      - application/json
+      description: 生成Ksuid类型的id
+      parameters:
+      - description: 获取ID数量，默认1，最大500
+        in: query
+        name: length
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 生成Ksuid类型的id
+      tags:
+      - ID生成相关接口
+  /api/snowflake:
+    get:
+      consumes:
+      - application/json
+      description: 创建雪花ID
+      parameters:
+      - description: 机器ID，取值范围0-1023，默认0
+        in: query
+        name: workerId
+        type: integer
+      - description: 获取ID数量，默认1，最大500
+        in: query
+        name: length
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 创建雪花ID
+      tags:
+      - ID生成相关接口
+  /api/sonyflake:
+    get:
+      consumes:
+      - application/json
+      description: '"创建sonyflake ID"'
+      parameters:
+      - description: 获取ID数量，默认1，最大500
+        in: query
+        name: length
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: '"创建sonyflake ID"'
+      tags:
+      - ID生成相关接口
+  /api/uuid1:
+    get:
+      consumes:
+      - application/json
+      description: 生成uuid版本1类型的id
+      parameters:
+      - description: 获取ID数量，默认1，最大500
+        in: query
+        name: length
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 生成uuid版本1类型的id
+      tags:
+      - ID生成相关接口
+  /api/uuid4:
+    get:
+      consumes:
+      - application/json
+      description: 生成uuid版本4类型的id
+      parameters:
+      - description: 获取ID数量，默认1，最大500
+        in: query
+        name: length
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 生成uuid版本4类型的id
+      tags:
+      - ID生成相关接口
+  /api/xid:
+    get:
+      consumes:
+      - application/json
+      description: 生成Xid类型的id
+      parameters:
+      - description: 获取ID数量，默认1，最大500
+        in: query
+        name: length
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 生成Xid类型的id
+      tags:
+      - ID生成相关接口
+swagger: "2.0"

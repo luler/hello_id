@@ -2,6 +2,8 @@ package route
 
 import (
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"go_test/app/controller"
 	"go_test/app/controller/common"
 	"go_test/app/middleware"
@@ -9,6 +11,8 @@ import (
 )
 
 func InitRouter(e *gin.Engine) {
+	//swagger页面
+	e.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	//前端路由
 	e.Static("/helloId", "./web/dist/helloId")
 	e.NoRoute(func(context *gin.Context) {
