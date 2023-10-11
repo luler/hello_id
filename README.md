@@ -31,7 +31,9 @@ docker-compose up -d
 {
   "code": 200,
   "data": {
-    "id": "1697622854507429888",
+    "ids": [
+      "1711927875550052352"
+    ],
     "type": "snowflake",
     "workerId": 0
   },
@@ -57,7 +59,9 @@ docker-compose up -d
 {
   "code": 200,
   "data": {
-    "id": "476556854336421890",
+    "ids": [
+      "482279196769390593"
+    ],
     "type": "sonyflake"
   },
   "message": "创建成功"
@@ -82,7 +86,9 @@ docker-compose up -d
 {
   "code": 200,
   "data": {
-    "id": "ee13483c-48d6-11ee-ae17-00ff7507da7c",
+    "ids": [
+      "c9973b96-67db-11ee-89f2-00ff0c3e16f1"
+    ],
     "type": "uuid1"
   },
   "message": "创建成功"
@@ -107,8 +113,10 @@ docker-compose up -d
 {
   "code": 200,
   "data": {
-    "id": "ee13483c-48d6-11ee-ae17-00ff7507da7c",
-    "type": "uuid1"
+    "ids": [
+      "f26cb76e-574b-4797-949e-85f449c77ee3"
+    ],
+    "type": "uuid4"
   },
   "message": "创建成功"
 }
@@ -132,7 +140,9 @@ docker-compose up -d
 {
   "code": 200,
   "data": {
-    "id": "cjpc168ip8e48m05a3l0",
+    "ids": [
+      "ckj09svfe3qiv1150kr0"
+    ],
     "type": "xid"
   },
   "message": "创建成功"
@@ -157,7 +167,9 @@ docker-compose up -d
 {
   "code": 200,
   "data": {
-    "id": "2UpIxKEKXsXzb52yVxeEgif9WDJ",
+    "ids": [
+      "2Wb9ZXX2OWPOpubXAKRLwQGn7cP"
+    ],
     "type": "ksuid"
   },
   "message": "创建成功"
