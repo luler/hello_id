@@ -13,7 +13,7 @@ func init() {
 func main() {
 
 	// 自动创建表
-	//db_helper.Db().AutoMigrate(&model.User{}, &model.AuthKey{}, &model.IdRule{})
+	app.InitApp("migrate")
 
 	os.Exit(0)
 }

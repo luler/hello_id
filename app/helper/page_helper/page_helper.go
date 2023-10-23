@@ -4,8 +4,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/iancoleman/strcase"
 	"go_test/app/helper/request_helper"
+	"go_test/app/helper/type_helper"
 	"gorm.io/gorm"
 	"strconv"
+	"time"
 )
 
 // 自动分页获取
@@ -45,15 +47,21 @@ func AutoPage(c *gin.Context, db *gorm.DB) map[string]interface{} {
 		data = []map[string]interface{}{}
 	}
 	//字段处理
-	for key, item := range data {
+	var ok bool
+	var tt time.Time
+	for i, item := range data {
 		// 创建新的 map 存储转换后的字段
 		converted := make(map[string]interface{})
 		for key, value := range item {
 			// 将字段名转换为大驼峰
 			convertedKey := strcase.ToLowerCamel(key)
+			tt, ok = value.(time.Time)
+			if ok {
+				value = type_helper.Time(tt)
+			}
 			converted[convertedKey] = value
 		}
-		data[key] = converted
+		data[i] = converted
 	}
 	res := make(map[string]interface{})
 	res["list"] = data
