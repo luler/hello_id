@@ -24,8 +24,6 @@ func main() {
 	//	log_helper.Info(i, " 1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111")
 	//}
 
-	//logic.FlushId()
-
 	//log_helper.Error("你是谁")
 	cache_helper.GoCache().Set("test", 1, cache.NoExpiration)
 	cache_helper.GoCache().Increment("test", 1)

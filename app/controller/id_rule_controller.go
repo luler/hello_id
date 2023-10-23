@@ -2,7 +2,6 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"go_test/app/helper/cache_helper"
 	"go_test/app/helper/db_helper"
 	"go_test/app/helper/exception_helper"
 	"go_test/app/helper/page_helper"
@@ -17,6 +16,7 @@ func SaveIdRule(c *gin.Context) {
 		Id        int
 		Type      string `validate:"required,alphanum" label:"规则标识"`
 		CurrentId any
+		Step      int32 `validate:"required,gte=1" label:"预占幅度"`
 		Prefix    string
 		Suffix    string
 		MinLength int
@@ -36,6 +36,7 @@ func SaveIdRule(c *gin.Context) {
 	if count > 0 { //存在
 		if err := db_helper.Db().Model(&model.IdRule{}).Where("type=?", param.Type).Updates(model.IdRule{
 			CurrentId: cid,
+			Step:      param.Step,
 			Prefix:    param.Prefix,
 			Suffix:    param.Suffix,
 			MinLength: param.MinLength,
@@ -46,6 +47,7 @@ func SaveIdRule(c *gin.Context) {
 		idrule := model.IdRule{
 			Type:      param.Type,
 			CurrentId: cid,
+			Step:      param.Step,
 			Prefix:    param.Prefix,
 			Suffix:    param.Suffix,
 			MinLength: param.MinLength,
@@ -54,10 +56,6 @@ func SaveIdRule(c *gin.Context) {
 			exception_helper.CommonException("新增失败")
 		}
 	}
-
-	//删除缓存
-	key := "IdRuleType:" + param.Type
-	cache_helper.GoCache().Delete(key)
 
 	response_helper.Success(c, "保存成功")
 }
@@ -78,11 +76,6 @@ func DelIdRule(c *gin.Context) {
 
 	if db_helper.Db().Where("id in ?", param.Ids).Delete(&model.IdRule{}).Error != nil {
 		exception_helper.CommonException("删除失败")
-	}
-	//删除缓存
-	for _, t := range types {
-		key := "IdRuleType:" + t
-		cache_helper.GoCache().Delete(key)
 	}
 	response_helper.Success(c, "删除成功")
 }
