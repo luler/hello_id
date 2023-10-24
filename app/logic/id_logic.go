@@ -12,17 +12,21 @@ import (
 
 var lock sync.Mutex
 
-var idRule model.IdRule
+var idRules = make(map[string]model.IdRule)
 
 // 生成id
 func GenerateId(idRuleType string, length int) []string {
 	lock.Lock()
 	defer lock.Unlock()
 
+	var idRule model.IdRule
+	var exists bool
 	ids := []string{}
 	for i := 0; i < length; i++ {
 
-		if idRule.Step <= 0 {
+		idRule, exists = idRules[idRuleType]
+
+		if !exists || idRule.Step <= 0 {
 			tx := db_helper.Db().Begin()
 			if err := db_helper.Db().Set("gorm:query_option", "for update").Where("type=?", idRuleType).First(&idRule).Error; err != nil {
 				exception_helper.CommonException("规则标识不存在")
@@ -37,6 +41,8 @@ func GenerateId(idRuleType string, length int) []string {
 			tx.Save(&idRuleCopy)
 
 			tx.Commit()
+
+			idRules[idRuleType] = idRule
 		}
 
 		idRule.CurrentId += 1
@@ -98,7 +104,7 @@ func GenerateId(idRuleType string, length int) []string {
 		id = prefix + id + suffix
 		ids = append(ids, id)
 		idRule.Step--
+		idRules[idRuleType] = idRule
 	}
-	//缓存24小时
 	return ids
 }
