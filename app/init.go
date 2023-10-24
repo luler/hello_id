@@ -24,7 +24,11 @@ func InitApp(initTypes ...string) {
 			cron_helper.InitCron()
 		case "migrate":
 			// 自动创建表
-			db_helper.Db().AutoMigrate(&model.User{}, &model.AuthKey{}, &model.IdRule{})
+			db_helper.Db().Set("gorm:table_options", "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci").AutoMigrate(
+				&model.User{},
+				&model.AuthKey{},
+				&model.IdRule{},
+			)
 		}
 	}
 
