@@ -4,6 +4,7 @@ import (
 	"go_test/app/helper/db_helper"
 	"go_test/app/helper/exception_helper"
 	"go_test/app/model"
+	"gorm.io/gorm/clause"
 	"strconv"
 	"strings"
 	"sync"
@@ -28,7 +29,7 @@ func GenerateId(idRuleType string, length int) []string {
 
 		if !exists || idRule.Step <= 0 {
 			tx := db_helper.Db().Begin()
-			if err := db_helper.Db().Set("gorm:query_option", "for update").Where("type=?", idRuleType).First(&idRule).Error; err != nil {
+			if tx.Clauses(clause.Locking{Strength: "UPDATE"}).Where("type=?", idRuleType).First(&idRule).Error != nil {
 				exception_helper.CommonException("规则标识不存在")
 			}
 			if idRule.Step <= 0 {
