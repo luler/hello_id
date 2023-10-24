@@ -14,12 +14,6 @@ COPY . .
 # 安装依赖
 RUN go mod download
 
-# 构建数据迁移程序
-RUN CGO_ENABLED=1 GOOS=linux go build -a -installsuffix cgo -o migrate ./bin/migrate/migrate.go
-
-#执行数据迁移程序
-RUN ./migrate
-
 # 构建二进制文件
 RUN CGO_ENABLED=1 GOOS=linux go build -a -installsuffix cgo -o main .
 

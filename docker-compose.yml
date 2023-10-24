@@ -7,6 +7,11 @@ services:
       - ADMIN_NAME=admin      #管理员账号
       - ADMIN_PASSWORD=admin  #管理员登录密码
       - JWT_SECRET=FYDE7x5A   #页面访问token加密秘钥，自定义一个复杂的
+      - DB_NAME=hello_id
+      - DB_HOST=10.10.11.195 #数据库ip地址
+      - DB_PORT=3306
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
     ports:
       - 2023:3000
     volumes:
