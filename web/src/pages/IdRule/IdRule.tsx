@@ -156,8 +156,8 @@ const Index: React.FC = () => {
           // @ts-ignore
           requestPost('/api/saveIdRule', {
             ...values,
-            Prefix: values.Prefix?.join(','),
-            Suffix: values.Suffix?.join(','),
+            prefix: values.prefix?.join(','),
+            suffix: values.suffix?.join(','),
           }).then(res => {
             if (res.code === 200) {
               message.success(res.message)
