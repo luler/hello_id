@@ -123,10 +123,6 @@ const Index: React.FC = () => {
     await requestGet('/api/getIdRuleList', params).then(res => {
       value.success = res.code === 200 ? true : false
       value.data = res.data.list || []
-      value.data = value.data.map(item => {
-        item.key = item.id
-        return item
-      })
       value.total = res.data.total || 0
     })
     return Promise.resolve(value)
@@ -134,6 +130,7 @@ const Index: React.FC = () => {
   return (
     <PageContainer style={{minHeight: window.innerHeight - 150}}>
       <ProTable
+        rowKey='id'
         columns={columns}
         search={{
           labelWidth: 120,
