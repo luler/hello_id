@@ -25,12 +25,13 @@ func InitRouter(e *gin.Engine) {
 	api := e.Group("/api")
 	//swagger页面
 	api.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	api.Any("/snowflake", common.Snowflake)
-	api.Any("/sonyflake", common.Sonyflake)
-	api.Any("/uuid1", common.Uuid1)
-	api.Any("/uuid4", common.Uuid4)
-	api.Any("/xid", common.Xid)
-	api.Any("/ksuid", common.Ksuid)
+	api.GET("/snowflake", middleware.AuthKey(), common.Snowflake)
+	api.GET("/sonyflake", middleware.AuthKey(), common.Sonyflake)
+	api.GET("/uuid1", middleware.AuthKey(), common.Uuid1)
+	api.GET("/uuid4", middleware.AuthKey(), common.Uuid4)
+	api.GET("/xid", middleware.AuthKey(), common.Xid)
+	api.GET("/ksuid", middleware.AuthKey(), common.Ksuid)
+	api.GET("/getId", middleware.AuthKey(), controller.GetId)
 	//登录相关
 	api.POST("/login", middleware.IpRateLimit(1, 1), controller.Login)
 	api.GET("/casLogin", controller.CasLogin)
@@ -44,5 +45,4 @@ func InitRouter(e *gin.Engine) {
 	auth.POST("/delIdRule", controller.DelIdRule)
 	auth.GET("/getIdRuleList", controller.GetIdRuleList)
 	auth.GET("/createId", controller.GetId)
-	api.GET("/getId", middleware.AuthKey(), controller.GetId)
 }

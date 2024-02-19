@@ -19,6 +19,7 @@ import (
 // @Produce  json
 // @Param workerId query int false "机器ID，取值范围0-1023，默认0"
 // @Param length query int false "获取ID数量，默认1，最大500"
+// @Param authKey query string true "授权码"
 // @Success 200
 // @Router /api/snowflake [get]
 func Snowflake(c *gin.Context) {
@@ -53,6 +54,7 @@ func Snowflake(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param length query int false "获取ID数量，默认1，最大500"
+// @Param authKey query string true "授权码"
 // @Success 200
 // @Router /api/sonyflake [get]
 func Sonyflake(c *gin.Context) {
@@ -81,6 +83,7 @@ func Sonyflake(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param length query int false "获取ID数量，默认1，最大500"
+// @Param authKey query string true "授权码"
 // @Success 200
 // @Router /api/uuid1 [get]
 func Uuid1(c *gin.Context) {
@@ -106,6 +109,7 @@ func Uuid1(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param length query int false "获取ID数量，默认1，最大500"
+// @Param authKey query string true "授权码"
 // @Success 200
 // @Router /api/uuid4 [get]
 func Uuid4(c *gin.Context) {
@@ -131,6 +135,7 @@ func Uuid4(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param length query int false "获取ID数量，默认1，最大500"
+// @Param authKey query string true "授权码"
 // @Success 200
 // @Router /api/xid [get]
 func Xid(c *gin.Context) {
@@ -156,6 +161,7 @@ func Xid(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param length query int false "获取ID数量，默认1，最大500"
+// @Param authKey query string true "授权码"
 // @Success 200
 // @Router /api/ksuid [get]
 func Ksuid(c *gin.Context) {

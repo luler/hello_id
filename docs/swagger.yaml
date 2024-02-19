@@ -22,15 +22,15 @@ paths:
         name: type
         required: true
         type: string
+      - description: 获取ID数量，默认1，最大500
+        in: query
+        name: length
+        type: integer
       - description: 授权码
         in: query
         name: authKey
         required: true
         type: string
-      - description: 获取ID数量，默认1，最大500
-        in: query
-        name: length
-        type: integer
       produces:
       - application/json
       responses:
@@ -49,6 +49,11 @@ paths:
         in: query
         name: length
         type: integer
+      - description: 授权码
+        in: query
+        name: authKey
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -71,6 +76,11 @@ paths:
         in: query
         name: length
         type: integer
+      - description: 授权码
+        in: query
+        name: authKey
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -89,6 +99,11 @@ paths:
         in: query
         name: length
         type: integer
+      - description: 授权码
+        in: query
+        name: authKey
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -107,6 +122,11 @@ paths:
         in: query
         name: length
         type: integer
+      - description: 授权码
+        in: query
+        name: authKey
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -125,6 +145,11 @@ paths:
         in: query
         name: length
         type: integer
+      - description: 授权码
+        in: query
+        name: authKey
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -143,6 +168,11 @@ paths:
         in: query
         name: length
         type: integer
+      - description: 授权码
+        in: query
+        name: authKey
+        required: true
+        type: string
       produces:
       - application/json
       responses:

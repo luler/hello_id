@@ -15,8 +15,8 @@ import (
 // @Accept  json
 // @Produce  json
 // @Param type query string true "ID标识"
-// @Param authKey query string true "授权码"
 // @Param length query int false "获取ID数量，默认1，最大500"
+// @Param authKey query string true "授权码"
 // @Success 200
 // @Router /api/getId [get]
 func GetId(c *gin.Context) {

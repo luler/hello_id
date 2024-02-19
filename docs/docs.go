@@ -46,17 +46,17 @@ const docTemplate = `{
                         "required": true
                     },
                     {
+                        "type": "integer",
+                        "description": "获取ID数量，默认1，最大500",
+                        "name": "length",
+                        "in": "query"
+                    },
+                    {
                         "type": "string",
                         "description": "授权码",
                         "name": "authKey",
                         "in": "query",
                         "required": true
-                    },
-                    {
-                        "type": "integer",
-                        "description": "获取ID数量，默认1，最大500",
-                        "name": "length",
-                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -85,6 +85,13 @@ const docTemplate = `{
                         "description": "获取ID数量，默认1，最大500",
                         "name": "length",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "授权码",
+                        "name": "authKey",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -119,6 +126,13 @@ const docTemplate = `{
                         "description": "获取ID数量，默认1，最大500",
                         "name": "length",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "授权码",
+                        "name": "authKey",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -147,6 +161,13 @@ const docTemplate = `{
                         "description": "获取ID数量，默认1，最大500",
                         "name": "length",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "授权码",
+                        "name": "authKey",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -175,6 +196,13 @@ const docTemplate = `{
                         "description": "获取ID数量，默认1，最大500",
                         "name": "length",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "授权码",
+                        "name": "authKey",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -203,6 +231,13 @@ const docTemplate = `{
                         "description": "获取ID数量，默认1，最大500",
                         "name": "length",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "授权码",
+                        "name": "authKey",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -231,6 +266,13 @@ const docTemplate = `{
                         "description": "获取ID数量，默认1，最大500",
                         "name": "length",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "授权码",
+                        "name": "authKey",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
