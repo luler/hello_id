@@ -3,6 +3,7 @@ services:
   hello_id:
     image: ccr.ccs.tencentyun.com/luler/hello_id
     privileged: true
+    restart: always
     environment:
       - ADMIN_NAME=admin      #管理员账号
       - ADMIN_PASSWORD=admin  #管理员登录密码
