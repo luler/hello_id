@@ -18,6 +18,9 @@ RUN go mod download && \
 # 运行阶段
 FROM alpine:3.18
 WORKDIR /app
+#添加glibc兼容层（快速修复）
+RUN apk add --no-cache gcompat
+#复制必要文件到镜像里面
 COPY . .
 COPY --from=builder /app/main .
 CMD ["./main"]
