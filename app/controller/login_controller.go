@@ -87,7 +87,7 @@ func CasLogin(c *gin.Context) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		exception_helper.CommonException(err)
+		exception_helper.CommonException(err.Error())
 	}
 	defer resp.Body.Close()
 	// 读取响应体
