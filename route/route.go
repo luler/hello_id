@@ -29,8 +29,11 @@ func InitRouter(e *gin.Engine) {
 	api.GET("/sonyflake", middleware.AuthKey(), common.Sonyflake)
 	api.GET("/uuid1", middleware.AuthKey(), common.Uuid1)
 	api.GET("/uuid4", middleware.AuthKey(), common.Uuid4)
+	api.GET("/uuid7", middleware.AuthKey(), common.Uuid7)
 	api.GET("/xid", middleware.AuthKey(), common.Xid)
 	api.GET("/ksuid", middleware.AuthKey(), common.Ksuid)
+	api.GET("/ulid", middleware.AuthKey(), common.Ulid)
+	api.GET("/nanoid", middleware.AuthKey(), common.Nanoid)
 	api.GET("/getId", middleware.AuthKey(), controller.GetId)
 	//登录相关
 	api.POST("/login", middleware.IpRateLimit(1, 1), controller.Login)

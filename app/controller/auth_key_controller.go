@@ -2,7 +2,7 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	uuid "github.com/satori/go.uuid"
+	uuid "github.com/gofrs/uuid/v5"
 	"go_test/app/helper/cache_helper"
 	"go_test/app/helper/db_helper"
 	"go_test/app/helper/exception_helper"
@@ -31,8 +31,8 @@ func SaveAuthKey(c *gin.Context) {
 			exception_helper.CommonException("保存失败")
 		}
 	} else {
-		uuid4 := uuid.NewV4().String()
-		auth_key.AuthKey = uuid4
+		uuid4, _ := uuid.NewV4()
+		auth_key.AuthKey = uuid4.String()
 		if err := db_helper.Db().Create(&auth_key).Error; err != nil {
 			exception_helper.CommonException("新增失败")
 		}

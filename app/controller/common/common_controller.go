@@ -1,15 +1,19 @@
 package common
 
 import (
+	"crypto/rand"
 	"github.com/bwmarrin/snowflake"
 	"github.com/gin-gonic/gin"
+	uuid "github.com/gofrs/uuid/v5"
+	nanoid "github.com/matoous/go-nanoid/v2"
+	"github.com/oklog/ulid/v2"
 	"github.com/rs/xid"
-	uuid "github.com/satori/go.uuid"
 	"github.com/segmentio/ksuid"
 	"github.com/sony/sonyflake"
 	"go_test/app/helper/exception_helper"
 	"go_test/app/helper/response_helper"
 	"strconv"
+	"time"
 )
 
 // @Summary 创建雪花ID
@@ -95,7 +99,8 @@ func Uuid1(c *gin.Context) {
 	}
 	var ids []string
 	for i := 0; i < length; i++ {
-		ids = append(ids, uuid.NewV1().String())
+		id, _ := uuid.NewV1()
+		ids = append(ids, id.String())
 	}
 	response_helper.Success(c, "创建成功", gin.H{
 		"type": "uuid1",
@@ -121,10 +126,38 @@ func Uuid4(c *gin.Context) {
 	}
 	var ids []string
 	for i := 0; i < length; i++ {
-		ids = append(ids, uuid.NewV4().String())
+		id, _ := uuid.NewV4()
+		ids = append(ids, id.String())
 	}
 	response_helper.Success(c, "创建成功", gin.H{
 		"type": "uuid4",
+		"ids":  ids,
+	})
+}
+
+// @Summary 生成uuid版本7类型的id
+// @Description  生成uuid版本7类型的id
+// @Tags ID生成相关接口
+// @Accept  json
+// @Produce  json
+// @Param length query int false "获取ID数量，默认1，最大500"
+// @Param authKey query string true "授权码"
+// @Success 200
+// @Router /api/uuid7 [get]
+func Uuid7(c *gin.Context) {
+	length, _ := strconv.Atoi(c.Query("length"))
+	if length <= 0 {
+		length = 1
+	} else if length > 500 {
+		exception_helper.CommonException("单次生成数量不能大于500")
+	}
+	var ids []string
+	for i := 0; i < length; i++ {
+		id, _ := uuid.NewV7()
+		ids = append(ids, id.String())
+	}
+	response_helper.Success(c, "创建成功", gin.H{
+		"type": "uuid7",
 		"ids":  ids,
 	})
 }
@@ -177,6 +210,64 @@ func Ksuid(c *gin.Context) {
 	}
 	response_helper.Success(c, "创建成功", gin.H{
 		"type": "ksuid",
+		"ids":  ids,
+	})
+}
+
+// @Summary 生成Ulid类型的id
+// @Description  生成Ulid类型的id
+// @Tags ID生成相关接口
+// @Accept  json
+// @Produce  json
+// @Param length query int false "获取ID数量，默认1，最大500"
+// @Param authKey query string true "授权码"
+// @Success 200
+// @Router /api/ulid [get]
+func Ulid(c *gin.Context) {
+	length, _ := strconv.Atoi(c.Query("length"))
+	if length <= 0 {
+		length = 1
+	} else if length > 500 {
+		exception_helper.CommonException("单次生成数量不能大于500")
+	}
+	var ids []string
+	for i := 0; i < length; i++ {
+		ids = append(ids, ulid.MustNew(ulid.Timestamp(time.Now()), rand.Reader).String())
+	}
+	response_helper.Success(c, "创建成功", gin.H{
+		"type": "ulid",
+		"ids":  ids,
+	})
+}
+
+// @Summary 生成Nanoid类型的id
+// @Description  生成Nanoid类型的id
+// @Tags ID生成相关接口
+// @Accept  json
+// @Produce  json
+// @Param length query int false "获取ID数量，默认1，最大500"
+// @Param nanoidSize query int false "生成的随机字符的长度，默认21"
+// @Param authKey query string true "授权码"
+// @Success 200
+// @Router /api/nanoid [get]
+func Nanoid(c *gin.Context) {
+	length, _ := strconv.Atoi(c.Query("length"))
+	nanoidSize, _ := strconv.Atoi(c.Query("nanoidSize"))
+	if length <= 0 {
+		length = 1
+	} else if length > 500 {
+		exception_helper.CommonException("单次生成数量不能大于500")
+	}
+	if nanoidSize <= 0 { // 默认长度 21
+		nanoidSize = 21
+	}
+	var ids []string
+	for i := 0; i < length; i++ {
+		id, _ := nanoid.New(nanoidSize) // 默认长度 21
+		ids = append(ids, id)
+	}
+	response_helper.Success(c, "创建成功", gin.H{
+		"type": "nanoid",
 		"ids":  ids,
 	})
 }

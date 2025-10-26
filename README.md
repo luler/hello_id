@@ -126,6 +126,34 @@ docker-compose up -d
 }
 ```
 
+##### 生成uuid V7 （根据时间生成，优于v1，有序）
+
+接口: /api/uuid7
+
+方法：GET
+
+请求参数：
+
+| 字段      | 是否必填 | 类型     | 描述                |
+|---------|------|--------|-------------------|
+| length  | 否    | int    | 	获取ID数量，默认1，最大500 |
+| authKey | 是    | string | 	授权码              |
+
+返回示例：
+
+```json
+{
+  "code": 200,
+  "data": {
+    "ids": [
+      "019a2067-f662-7bb3-8b9b-5c576f0e9719"
+    ],
+    "type": "uuid7"
+  },
+  "message": "创建成功"
+}
+```
+
 ##### 生成xid（基于时间戳、随机数生成，有序）
 
 接口: /api/xid
@@ -177,6 +205,63 @@ docker-compose up -d
       "2Wb9ZXX2OWPOpubXAKRLwQGn7cP"
     ],
     "type": "ksuid"
+  },
+  "message": "创建成功"
+}
+```
+
+##### 生成nanoid（完全随机生成，无序）
+
+接口: /api/nanoid
+
+方法：GET
+
+请求参数：
+
+| 字段         | 是否必填 | 类型     | 描述                |
+|------------|------|--------|-------------------|
+| length     | 否    | int    | 	获取ID数量，默认1，最大500 |
+| authKey    | 是    | string | 	授权码              |
+| nanoidSize | 否    | int | 	随机字符长度，默认21      |
+
+返回示例：
+
+```json
+{
+  "code": 200,
+  "data": {
+    "ids": [
+      "FovJYJs4V78pj1Wqg6bPb"
+    ],
+    "type": "nanoid"
+  },
+  "message": "创建成功"
+}
+```
+
+##### 生成ulid（基于时间+随机数生成，长度为26，有序）
+
+接口: /api/ulid
+
+方法：GET
+
+请求参数：
+
+| 字段         | 是否必填 | 类型     | 描述                |
+|------------|------|--------|-------------------|
+| length     | 否    | int    | 	获取ID数量，默认1，最大500 |
+| authKey    | 是    | string | 	授权码              |
+
+返回示例：
+
+```json
+{
+  "code": 200,
+  "data": {
+    "ids": [
+      "01K8G4S2HW56FNR6YNZA685A69"
+    ],
+    "type": "nanoid"
   },
   "message": "创建成功"
 }
