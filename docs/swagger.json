@@ -93,6 +93,47 @@
                 }
             }
         },
+        "/api/nanoid": {
+            "get": {
+                "description": "生成Nanoid类型的id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ID生成相关接口"
+                ],
+                "summary": "生成Nanoid类型的id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "获取ID数量，默认1，最大500",
+                        "name": "length",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "生成的随机字符的长度，默认21",
+                        "name": "nanoidSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "授权码",
+                        "name": "authKey",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/api/snowflake": {
             "get": {
                 "description": "创建雪花ID",
@@ -169,6 +210,41 @@
                 }
             }
         },
+        "/api/ulid": {
+            "get": {
+                "description": "生成Ulid类型的id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ID生成相关接口"
+                ],
+                "summary": "生成Ulid类型的id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "获取ID数量，默认1，最大500",
+                        "name": "length",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "授权码",
+                        "name": "authKey",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/api/uuid1": {
             "get": {
                 "description": "生成uuid版本1类型的id",
@@ -217,6 +293,41 @@
                     "ID生成相关接口"
                 ],
                 "summary": "生成uuid版本4类型的id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "获取ID数量，默认1，最大500",
+                        "name": "length",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "授权码",
+                        "name": "authKey",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/uuid7": {
+            "get": {
+                "description": "生成uuid版本7类型的id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ID生成相关接口"
+                ],
+                "summary": "生成uuid版本7类型的id",
                 "parameters": [
                     {
                         "type": "integer",

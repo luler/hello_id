@@ -62,6 +62,33 @@ paths:
       summary: 生成Ksuid类型的id
       tags:
       - ID生成相关接口
+  /api/nanoid:
+    get:
+      consumes:
+      - application/json
+      description: 生成Nanoid类型的id
+      parameters:
+      - description: 获取ID数量，默认1，最大500
+        in: query
+        name: length
+        type: integer
+      - description: 生成的随机字符的长度，默认21
+        in: query
+        name: nanoidSize
+        type: integer
+      - description: 授权码
+        in: query
+        name: authKey
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 生成Nanoid类型的id
+      tags:
+      - ID生成相关接口
   /api/snowflake:
     get:
       consumes:
@@ -112,6 +139,29 @@ paths:
       summary: '"创建sonyflake ID"'
       tags:
       - ID生成相关接口
+  /api/ulid:
+    get:
+      consumes:
+      - application/json
+      description: 生成Ulid类型的id
+      parameters:
+      - description: 获取ID数量，默认1，最大500
+        in: query
+        name: length
+        type: integer
+      - description: 授权码
+        in: query
+        name: authKey
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 生成Ulid类型的id
+      tags:
+      - ID生成相关接口
   /api/uuid1:
     get:
       consumes:
@@ -156,6 +206,29 @@ paths:
         "200":
           description: OK
       summary: 生成uuid版本4类型的id
+      tags:
+      - ID生成相关接口
+  /api/uuid7:
+    get:
+      consumes:
+      - application/json
+      description: 生成uuid版本7类型的id
+      parameters:
+      - description: 获取ID数量，默认1，最大500
+        in: query
+        name: length
+        type: integer
+      - description: 授权码
+        in: query
+        name: authKey
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 生成uuid版本7类型的id
       tags:
       - ID生成相关接口
   /api/xid:
